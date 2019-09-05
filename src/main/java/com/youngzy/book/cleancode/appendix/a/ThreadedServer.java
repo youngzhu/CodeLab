@@ -14,7 +14,6 @@ public class ThreadedServer implements Runnable {
 		serverSocket.setSoTimeout(millisecondsTimeout);
 	}
 
-	@Override
 	public void run() {
 		System.out.println("Server starting...");
 		
@@ -56,7 +55,7 @@ public class ThreadedServer implements Runnable {
 		}
 	}
 
-	private void process(Socket socket) {
+	private void process(final Socket socket) {
 
 		if (null == socket) {
 			return;
