@@ -1,4 +1,4 @@
-package com.youngzy.leetcode.basicalgorithm;
+package com.youngzy.leetcode.trie;
 
 import java.util.HashMap;
 import java.util.Map;
