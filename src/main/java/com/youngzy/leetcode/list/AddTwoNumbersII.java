@@ -1,5 +1,7 @@
 package com.youngzy.leetcode.list;
 
+import java.util.List;
+
 /**
  * 给定两个非空链表来代表两个非负整数。数字最高位位于链表开始位置。
  * 它们的每个节点只存储单个数字。将这两数相加会返回一个新的链表。
@@ -20,6 +22,39 @@ public class AddTwoNumbersII {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode ans = new ListNode(0);
         ListNode cur = ans;
+
+        ListNode ln1 = l1, ln2 = l2;
+
+        ListNode zero1 = null, zero2 = null;
+        while (ln1.next != null || ln2.next != null) {
+            if (ln1.next == null) {
+                zero1 = new ListNode(0);
+            } else {
+                ln1 = ln1.next;
+            }
+
+            if (ln2.next == null) {
+                zero2 = new ListNode(0);
+            } else {
+                ln2 = ln2.next;
+            }
+
+            if (zero1 != null) {
+                zero1.next = new ListNode(0);
+            }
+            if (zero2 != null) {
+                zero2.next = new ListNode(0);
+            }
+        }
+
+        if (zero1 != null) {
+            zero1.next = l1;
+            l1 = zero1;
+        }
+        if (zero2 != null) {
+            zero2.next = l2;
+            l2 = zero2;
+        }
 
         int carry = add(cur, l1, l2);
 
