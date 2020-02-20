@@ -1,5 +1,6 @@
 package com.youngzy.leetcode.list;
 
+import java.time.Clock;
 import java.util.List;
 
 /**
@@ -20,43 +21,20 @@ import java.util.List;
 public class AddTwoNumbersII {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode ans = new ListNode(0);
+        ListNode ans = new ListNode(-1);
         ListNode cur = ans;
 
-        ListNode ln1 = l1, ln2 = l2;
+        // 将补全的列表
+        // 有个伪头
+        ListNode ln1 = new ListNode(0);
+        ListNode ln2 = new ListNode(0);
+        ln1.next = l1;
+        ln2.next = l2;
 
-        ListNode zero1 = null, zero2 = null;
-        while (ln1.next != null || ln2.next != null) {
-            if (ln1.next == null) {
-                zero1 = new ListNode(0);
-            } else {
-                ln1 = ln1.next;
-            }
+        fillWithZero(ln1, ln2);
 
-            if (ln2.next == null) {
-                zero2 = new ListNode(0);
-            } else {
-                ln2 = ln2.next;
-            }
-
-            if (zero1 != null) {
-                zero1.next = new ListNode(0);
-            }
-            if (zero2 != null) {
-                zero2.next = new ListNode(0);
-            }
-        }
-
-        if (zero1 != null) {
-            zero1.next = l1;
-            l1 = zero1;
-        }
-        if (zero2 != null) {
-            zero2.next = l2;
-            l2 = zero2;
-        }
-
-        int carry = add(cur, l1, l2);
+        // 用补零后的链表去递归
+        int carry = add(cur, ln1.next, ln2.next);
 
         if (carry > 0) {
             // 处理最大长度溢出的情况
@@ -67,6 +45,41 @@ public class AddTwoNumbersII {
         }
 
         return ans.next;
+    }
+
+    /**
+     * 给位数较少的数据补零
+     * 即 最终l1，l2 一样长
+     *
+     * @param l1
+     * @param l2
+     */
+    private void fillWithZero(ListNode l1, ListNode l2) {
+        ListNode p1 = l1, p2 = l2; // 移动指针
+        ListNode zero1 = null, zero2 = null;
+
+        while (p1 != null && p2 != null) {
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+
+        while (p1 != null) {
+            // 1 没结束，给 2 补零
+            insertZero(l2);
+            p1 = p1.next;
+        }
+
+        while (p2 != null) {
+            insertZero(l1);
+            p2 = p2.next;
+        }
+
+    }
+
+    private void insertZero(ListNode ln) {
+        ListNode zero = new ListNode(0);
+        zero.next = ln.next;
+        ln.next = zero;
     }
 
     /**
@@ -85,41 +98,36 @@ public class AddTwoNumbersII {
         int carry = 0; // 进位
         int sum;
 
-        if (l1.next == null && l2.next == null) {
-            // 都到了最后一位
-            sum = l1.val + l2.val + carry;
-            carry = sum / 10;
-
-            cur.next = new ListNode(sum % 10);
-            return carry;
+        if (l1 == null || l2 == null) {
+            return 0;
         }
 
-        int v1 = l1.val;
-        int v2 = l2.val;
-
-        if (l1.next == null) {
-            l1 = l1;
-            v1 = 0;
-        } else {
-            l1 = l1.next;
-        }
-        if (l2.next == null) {
-            l2 = l2;
-            v2 = 0;
-        } else {
-            l2 = l2.next;
-        }
-
-        cur.next = new ListNode(v1 + v2);
+        // 先占个位
+        // val 就是对应位置上的2值相加，后面处理进位问题
+        cur.next = new ListNode(l1.val + l2.val);
         cur = cur.next;
+        l1 = l1.next;
+        l2 = l2.next;
         carry = add(cur, l1, l2);
 
-        // 重新处理进位
+        // 处理进位
         sum = cur.val + carry;
         carry = sum / 10;
         cur.val = sum % 10;
 
         return carry;
+    }
+
+    public static void main(String[] args) {
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(1);
+
+        ListNode l2 = new ListNode(9);
+
+        AddTwoNumbersII atn = new AddTwoNumbersII();
+        atn.addTwoNumbers(l1, l2);
+
+        System.out.println();
     }
 
 }
