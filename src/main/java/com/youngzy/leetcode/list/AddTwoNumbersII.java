@@ -26,7 +26,7 @@ public class AddTwoNumbersII {
         return ans.next;
     }
 
-    private ListNode add(ListNode cur, ListNode l1, ListNode l2, int carry) {
+    private void add(ListNode cur, ListNode l1, ListNode l2, int carry) {
 
         if (l1.next == null && l2.next == null) {
             // 都到了末尾
@@ -36,7 +36,7 @@ public class AddTwoNumbersII {
             carry = sum / 10;
 
             cur.next = new ListNode(sum % 10);
-            return cur;
+            return;
         }
 
         int v1 = l1.val;
@@ -60,7 +60,6 @@ public class AddTwoNumbersII {
         cur = cur.next;
         add(cur, l1, l2, carry);
 
-        return cur;
     }
 
 }
