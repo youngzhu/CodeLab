@@ -48,11 +48,10 @@ public class AddTwoNumbersII {
     private int add(ListNode cur, ListNode l1, ListNode l2) {
 
         int carry = 0; // 进位
+        int sum;
 
         if (l1.next == null && l2.next == null) {
-            // 都到了末尾
-            int sum;
-
+            // 都到了最后一位
             sum = l1.val + l2.val + carry;
             carry = sum / 10;
 
@@ -79,7 +78,11 @@ public class AddTwoNumbersII {
         cur.next = new ListNode(v1 + v2);
         cur = cur.next;
         carry = add(cur, l1, l2);
-        cur.val = cur.val + carry;
+
+        // 重新处理进位
+        sum = cur.val + carry;
+        carry = sum / 10;
+        cur.val = sum % 10;
 
         return carry;
     }
