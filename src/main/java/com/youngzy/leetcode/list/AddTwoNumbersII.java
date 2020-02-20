@@ -21,12 +21,33 @@ public class AddTwoNumbersII {
         ListNode ans = new ListNode(0);
         ListNode cur = ans;
 
-        add(cur, l1, l2,  0);
+        int carry = add(cur, l1, l2);
+
+        if (carry > 0) {
+            // 处理最大长度溢出的情况
+            // 如 [1],[9]
+            ListNode ln = new ListNode(carry);
+            ln.next = ans.next;
+            ans.next = ln;
+        }
 
         return ans.next;
     }
 
-    private void add(ListNode cur, ListNode l1, ListNode l2, int carry) {
+    /**
+     * 递归
+     *
+     * 因为进位carry 无法像对象一样在方法中传递，
+     * 所以必须return
+     *
+     * @param cur
+     * @param l1
+     * @param l2
+     * @return
+     */
+    private int add(ListNode cur, ListNode l1, ListNode l2) {
+
+        int carry = 0; // 进位
 
         if (l1.next == null && l2.next == null) {
             // 都到了末尾
@@ -36,7 +57,7 @@ public class AddTwoNumbersII {
             carry = sum / 10;
 
             cur.next = new ListNode(sum % 10);
-            return;
+            return carry;
         }
 
         int v1 = l1.val;
@@ -55,11 +76,12 @@ public class AddTwoNumbersII {
             l2 = l2.next;
         }
 
-
         cur.next = new ListNode(v1 + v2);
         cur = cur.next;
-        add(cur, l1, l2, carry);
+        carry = add(cur, l1, l2);
+        cur.val = cur.val + carry;
 
+        return carry;
     }
 
 }
