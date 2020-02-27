@@ -36,6 +36,45 @@ public class LetterCombinationsPhoneNumber {
         return ans;
     }
 
+    private static final String[] LETTER_DIGIT_ARR = {
+            "",     //0
+            "",     //1
+            "abc",  //2
+            "def",  //3
+            "ghi",  //4
+            "jkl",  //5
+            "mno",  //6
+            "pqrs", //7
+            "tuv",  //8
+            "wxyz"  //9
+    };
+
+    /**
+     * 回溯（用数组）
+     *
+     * @param ans
+     * @param digits
+     * @param idx
+     * @param letterArr
+     */
+    private void backtrack(List<String> ans, String digits, int idx, String[] letterArr) {
+        // 注意不能用 valueOf，因为没有 char 做参数的
+        int index = digits.charAt(idx) - '0';
+        char[] arr = LETTER_DIGIT_ARR[index].toCharArray();
+
+        for (int i = 0; i < arr.length; i++) {
+            letterArr[idx] = String.valueOf(arr[i]);
+
+            if (idx == digits.length() - 1) {
+                // 结束
+                ans.add(String.join("", letterArr));
+            } else {
+                //
+                backtrack(ans, digits, idx + 1, letterArr);
+            }
+        }
+    }
+
     private static final Map<Character, String[]> LETTER_DIGIT_MAP = new HashMap<Character, String[]>() {
         {
             put('2', new String[]{"a", "b", "c"});
@@ -51,14 +90,14 @@ public class LetterCombinationsPhoneNumber {
     };
 
     /**
-     * 回溯
+     * 回溯（用Map）
      *
      * @param ans
      * @param digits
-     * @param i
+     * @param idx
      * @param letterArr
      */
-    private void backtrack(List<String> ans, String digits, int idx, String[] letterArr) {
+    private void backtrack1(List<String> ans, String digits, int idx, String[] letterArr) {
         String[] arr = LETTER_DIGIT_MAP.get(digits.charAt(idx));
         for (int i = 0; i < arr.length; i++) {
             letterArr[idx] = arr[i];
