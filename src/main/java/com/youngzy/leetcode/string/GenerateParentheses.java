@@ -32,7 +32,9 @@ public class GenerateParentheses {
         validParentheses[0] = "(";
         validParentheses[n * 2 - 1] = ")";
 
-        backtrack(ans, validParentheses, 1, n - 1, n - 1);
+//        backtrack2(ans, validParentheses, 1, n - 1, n - 1);
+
+        backtrack(ans, validParentheses, 1, 1);
 
         return ans;
     }
@@ -40,15 +42,53 @@ public class GenerateParentheses {
     /**
      * 回溯
      *
+     * 跟 2 相比，减少一个参数：没变化，过
+     *
+     * @param ans - 最终结果
+     * @param validParentheses - 有效的括号序列，如 ["(", "(", ")", ")"]
+     */
+    private void backtrack(List<String> ans, String[] validParentheses, int openCount, int closeCount) {
+
+        if (closeCount + openCount > validParentheses.length) {
+            return;
+        }
+
+        if (closeCount == validParentheses.length / 2
+        && openCount == validParentheses.length / 2) {
+            ans.add(String.join("", validParentheses));
+            return;
+        }
+
+        // 先尝试左括号再尝试右括号
+        // 左括号
+        if (openCount <= validParentheses.length / 2) {
+            validParentheses[openCount + closeCount - 1] = "(";
+            backtrack(ans, validParentheses, openCount + 1, closeCount);
+        }
+        // 右括号
+        // 现有的左括号数 > 右括号数，才可以新增右括号
+        if (openCount >= closeCount) {
+            validParentheses[openCount + closeCount - 1] = ")";
+            backtrack(ans, validParentheses, openCount, closeCount + 1);
+        }
+    }
+
+
+    /**
+     * 回溯
+     *
+     * 跟 1 相比，是否用for循环，差别不大
+     *
      * @param ans - 最终结果
      * @param validParentheses - 有效的括号序列，如 ["(", "(", ")", ")"]
      * @param idx - validParentheses 的下标
      * @param openCount - 已使用的左括号数量
      * @param closeCount - 已使用的右括号的数量
      */
-    private void backtrack(List<String> ans, String[] validParentheses, int idx, int openCount, int closeCount) {
+    private void backtrack2(List<String> ans, String[] validParentheses, int idx, int openCount, int closeCount) {
 
-        if (idx == validParentheses.length - 1) {
+//        if (idx == validParentheses.length - 1) {
+        if (openCount == 0 && closeCount == 0) {
             ans.add(String.join("", validParentheses));
             return;
         }
@@ -57,14 +97,14 @@ public class GenerateParentheses {
         // 左括号
         if (openCount > 0) {
             validParentheses[idx] = "(";
-            backtrack(ans, validParentheses, idx + 1, openCount - 1, closeCount);
+            backtrack2(ans, validParentheses, idx + 1, openCount - 1, closeCount);
         }
         // 右括号
         // 现有的左括号数 > 右括号数，才可以新增右括号
         // 反过来讲，剩余的open <= 剩余的close 数量，才可以追加 右括号
         if (openCount <= closeCount) {
             validParentheses[idx] = ")";
-            backtrack(ans, validParentheses, idx + 1, openCount, closeCount - 1);
+            backtrack2(ans, validParentheses, idx + 1, openCount, closeCount - 1);
         }
     }
 
@@ -90,7 +130,7 @@ public class GenerateParentheses {
                 if (openCount > 0) {
                     validParentheses[idx] = "(";
 //                    openCount--;
-                    backtrack(ans, validParentheses, idx + 1, openCount - 1, closeCount);
+                    backtrack1(ans, validParentheses, idx + 1, openCount - 1, closeCount);
                 }
             } else {
                 // 右括号
@@ -100,7 +140,7 @@ public class GenerateParentheses {
                     if (openCount <= closeCount) {
                         validParentheses[idx] = ")";
 //                        closeCount--;
-                        backtrack(ans, validParentheses, idx + 1, openCount, closeCount - 1);
+                        backtrack1(ans, validParentheses, idx + 1, openCount, closeCount - 1);
                     }
                 }
             }
