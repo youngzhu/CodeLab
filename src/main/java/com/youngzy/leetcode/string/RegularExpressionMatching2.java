@@ -52,6 +52,9 @@ public class RegularExpressionMatching2 {
      * 经过前面的失败，准备换条路：对*的匹配使用回溯
      * 因为*可以匹配0次或N次，需要不断试错
      *
+     * 计划2h，结果6h+才测试通过。。
+     * 效率也不高
+     *
      * @param s
      * @param p
      * @return
@@ -69,51 +72,55 @@ public class RegularExpressionMatching2 {
 
     /**
      * 回溯
-     * <p>
      * 对 * 的匹配从0开始逐渐试错
      *
      * @param s
      * @param p
-     * @param sIdx    - s 开始的位置
-     * @param pIdx    - p 开始的位置
-     * @param idxStar
-     * @param matchStr
+     * @param sIdx - s 开始匹配的位置
+     * @param pIdx - p 开始匹配的位置
+     * @param idxStar - * 最新的位置
+     * @param matchStr - 已匹配的字符串
+     * @param list - 完全匹配的字符串集合。有一个元素就够了
      */
     private void backtrack(String s, String p, int sIdx, int pIdx, int idxStar, String matchStr, List<String> list) {
 
+        // 完全匹配的字符串集合。有一个元素就够了
         if (list.size() > 0) {
             return;
         }
 
         if (idxStar == -1) {
+            // 已经接近或到达末尾
 
-            // s 和 p 同时到达末尾
-            boolean case3 = sIdx == s.length() && pIdx == p.length();
+            boolean match = false;
+            // 大致2种情形
+            // 1, s 和 p 同时到达末尾，match
+            // 2, 没有结束继续比较
+            if (sIdx == s.length() && pIdx == p.length()) {
+                // 1
+                match = true;
+            } else {
+                // 2
+                // 剩余字符比较，又分为2种
+                // 2.1, 有*的，*必定是在最后一位，且长度大于等于2
+                // 2.2, 没*的，包括 . 和字母
+                if (p.length() >= 2
+                        && p.charAt(p.length() - 1) == '*') {
+                    // 2.1
 
-            if (case3) {
-                list.add(matchStr);
-                return;
-            }
+                    // * 前面的字符必须跟 s 当前字符匹配
+                    if (s.charAt(sIdx) == p.charAt(p.length() - 1)
+                        || p.charAt(p.length() -2) == '.') {
 
-            // 剩余的字符都一样
-            boolean case1 = compareWithoutStar(s.substring(sIdx), p.substring(pIdx));
-            // 以 * 结尾的
-            boolean case2 =  false;
-
-            // p 长度至少是 2
-            if (p.length() >= 2 &&p.charAt(p.length() - 1) == '*' && compareWithoutStar("" + s.charAt(sIdx), "" + p.charAt(p.length() - 2))) {
-
-                int loop = s.length() - sIdx;
-                String sTmp = "";
-                while (loop > 0) {
-                    sTmp += s.charAt(sIdx);
-                    loop --;
+//                        match = true;
+                    }
+                } else {
+                    // 2.2
+                    match = compareWithoutStar(s.substring(sIdx), p.substring(pIdx));
                 }
-
-                case2 = sTmp.equals(s.substring(sIdx));
             }
 
-            if (case1 || case2) {
+            if (match) {
                 list.add(matchStr);
                 return;
             }
