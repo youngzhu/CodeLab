@@ -134,25 +134,21 @@ public class RegularExpressionMatching2 {
             pIdx = idxStar + 1;
             idxStar = p.indexOf('*', pIdx);
 
-            // 匹配0次
-            backtrack(s, p, sIdx, pIdx, idxStar, matchStr, list);
+            // 匹配次数
+            int matchTimes = 0;
 
-            if (list.isEmpty() && sIdx < s.length()) {
-
-                // 匹配大于 0 次
-                int matchTimes = 1;
-                while (matchTimes <= s.length() - sIdx) {
-
-                    if (s.charAt(sIdx + matchTimes - 1) != beforeStar && beforeStar != '.') {
-                        return;
-                    }
-
-                    matchStr += s.charAt(sIdx + matchTimes - 1);
-
-                    backtrack(s, p, sIdx + matchTimes, pIdx, idxStar, matchStr, list);
-
-                    matchTimes ++;
+            while (list.isEmpty() && sIdx + matchTimes <= s.length()) {
+                if (matchTimes > 0 && s.charAt(sIdx + matchTimes - 1) != beforeStar && beforeStar != '.') {
+                    return;
                 }
+
+                if (matchTimes > 0) {
+                    matchStr += s.charAt(sIdx + matchTimes - 1);
+                }
+
+                backtrack(s, p, sIdx + matchTimes, pIdx, idxStar, matchStr, list);
+
+                matchTimes ++;
             }
         }
     }
