@@ -13,10 +13,19 @@ public class RegularExpressionMatchingTest {
     }
 
     @Test
+    public void test15() {
+        Assert.assertFalse(regExp.isMatch("ab", ".c"));
+    }
+
+    @Test
+    public void test14() {
+        Assert.assertTrue(regExp.isMatch("aaa", "a.a"));
+    }
+
+    @Test
     public void test13() {
         Assert.assertTrue(regExp.isMatch("abbabaaaaaaacaa", "a*.*b.a.*c*b*a*c*"));
     }
-
 
     @Test
     public void test12() {

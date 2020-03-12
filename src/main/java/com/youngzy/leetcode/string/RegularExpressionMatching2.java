@@ -169,14 +169,32 @@ public class RegularExpressionMatching2 {
             // 不含匹配符，直接比较字符串
             return s1.equals(s2);
         } else {
-            for (int i = 0; i < s1.length(); i++) {
-                if (s1.charAt(i) != s2.charAt(i) && s2.charAt(i) != '.') {
+//            for (int i = 0; i < s1.length(); i++) {
+//                if (s1.charAt(i) != s2.charAt(i) && s2.charAt(i) != '.') {
+//                    return false;
+//                }
+//            }
+
+            // 跟 上面 挨个比，没啥区别
+            int from = 0, end = 0;
+
+            while (true) {
+                end = s2.indexOf('.', end);
+
+                if (end == -1) {
+                    return s1.substring(from).equals(s2.substring(from));
+                }
+
+                if (end - from > 0 && ! s1.substring(from, end).equals(s2.substring(from, end))) {
                     return false;
                 }
+
+                end ++;
+                from = end;
+
             }
         }
 
-        return true;
     }
 
 }
