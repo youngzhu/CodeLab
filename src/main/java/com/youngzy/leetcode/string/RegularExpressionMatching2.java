@@ -101,23 +101,8 @@ public class RegularExpressionMatching2 {
                 match = true;
             } else {
                 // 2
-                // 剩余字符比较，又分为2种
-                // 2.1, 有*的，*必定是在最后一位，且长度大于等于2
-                // 2.2, 没*的，包括 . 和字母
-                if (p.length() >= 2
-                        && p.charAt(p.length() - 1) == '*') {
-                    // 2.1
-
-                    // * 前面的字符必须跟 s 当前字符匹配
-                    if (s.charAt(sIdx) == p.charAt(p.length() - 1)
-                        || p.charAt(p.length() -2) == '.') {
-
-//                        match = true;
-                    }
-                } else {
-                    // 2.2
-                    match = compareWithoutStar(s.substring(sIdx), p.substring(pIdx));
-                }
+                // 不会含有 *
+                match = compareWithoutStar(s.substring(sIdx), p.substring(pIdx));
             }
 
             if (match) {
@@ -138,18 +123,19 @@ public class RegularExpressionMatching2 {
                     // 匹配则继续
                     matchStr += sStr;
                     sIdx += len;
-
                 } else {
                     // 普通字符都不等，
                     return;
                 }
             }
 
-            int pIdxNew = idxStar + 1;
-            int idxStarNew = p.indexOf('*', pIdxNew);
+            // 开始对 * 进行匹配
+            char beforeStar = p.charAt(idxStar - 1); // * 前面的字符
+            pIdx = idxStar + 1;
+            idxStar = p.indexOf('*', pIdx);
 
             // 匹配0次
-            backtrack(s, p, sIdx, pIdxNew, idxStarNew, matchStr, list);
+            backtrack(s, p, sIdx, pIdx, idxStar, matchStr, list);
 
             if (list.isEmpty() && sIdx < s.length()) {
 
@@ -157,13 +143,13 @@ public class RegularExpressionMatching2 {
                 int matchTimes = 1;
                 while (matchTimes <= s.length() - sIdx) {
 
-                    if (s.charAt(sIdx + matchTimes - 1) != p.charAt(idxStar - 1) && p.charAt(idxStar - 1) != '.') {
+                    if (s.charAt(sIdx + matchTimes - 1) != beforeStar && beforeStar != '.') {
                         return;
                     }
 
                     matchStr += s.charAt(sIdx + matchTimes - 1);
 
-                    backtrack(s, p, sIdx + matchTimes, pIdxNew, idxStarNew, matchStr, list);
+                    backtrack(s, p, sIdx + matchTimes, pIdx, idxStar, matchStr, list);
 
                     matchTimes ++;
                 }
