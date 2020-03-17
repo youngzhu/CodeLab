@@ -5,11 +5,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class RegularExpressionMatchingTest {
-    RegularExpressionMatching2 regExp;
+    RegularExpressionMatching3 regExp;
 
     @Before
     public void init() {
-        regExp = new RegularExpressionMatching2();
+        regExp = new RegularExpressionMatching3();
+    }
+
+    @Test
+    public void test16() {
+        Assert.assertTrue(regExp.isMatch("", ".*"));
     }
 
     @Test
