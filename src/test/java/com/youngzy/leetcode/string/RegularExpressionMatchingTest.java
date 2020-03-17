@@ -5,11 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class RegularExpressionMatchingTest {
-    RegularExpressionMatching3 regExp;
+    RegularExpressionMatching4 regExp;
 
     @Before
     public void init() {
-        regExp = new RegularExpressionMatching3();
+        regExp = new RegularExpressionMatching4();
     }
 
     @Test

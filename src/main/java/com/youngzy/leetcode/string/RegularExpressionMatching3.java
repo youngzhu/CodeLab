@@ -25,7 +25,7 @@ public class RegularExpressionMatching3 {
         }
 
         // 第一个字符是否匹配
-        boolean isFirstMatch = ! s.isEmpty() &&
+        boolean isFirstMatch = ! s.isEmpty() && // s 不为空
                                     (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.');
 
         if (p.length() >= 2 && p.charAt(1) == '*') {
