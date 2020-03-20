@@ -6,8 +6,7 @@ import java.math.RoundingMode;
 
 /**
  *
- * 等额本金：
- * 每月还款金额 = （贷款本金 / 还款月数）+（本金 — 已归还本金累计额）×每月利率
+ *
  */
 public class LPR {
     private static final BigDecimal MONTHS_OF_YEAR = new BigDecimal(12);
@@ -28,10 +27,59 @@ public class LPR {
     }
 
     /**
+     * 等额本息 和 等额本金 的差别
+     */
+    public void diff() {
+        BigDecimal sum1 = calculate1();
+        BigDecimal sum2 = calculate2();
+
+        BigDecimal diff = sum1.subtract(sum2);
+        BigDecimal perMonth = diff.divide(new BigDecimal(loanTerm * 12), MC_4_MONEY);
+
+        System.out.println("等额本息 比 等额本金 多付利息：" + diff + "，平均每月：" + perMonth);
+
+    }
+
+    /**
+     * average capital
+     * 等额本金：
+     *      每月还款金额 = （贷款本金 / 还款月数）+（本金 — 已归还本金累计额）×每月利率
+     */
+    public BigDecimal calculate2() {
+        BigDecimal sum = BigDecimal.ZERO;
+        BigDecimal perMonth;
+
+        // 月利率
+        BigDecimal rateOfMonth = rateOfYear.divide(MONTHS_OF_YEAR, MC_4_RATE);
+        // 还款月数
+        int months = loanTerm * 12;
+
+        // 不变的部分
+        // 本金=（贷款本金 / 还款月数）
+        BigDecimal capital = loanAmount.divide(new BigDecimal(months), MC_4_MONEY);
+        // 利息=（本金 — 已归还本金累计额）×每月利率
+        BigDecimal interest;
+        for (int i = 1; i <= months; i ++) {
+            BigDecimal paidLoan = capital.multiply(new BigDecimal(i)); // 已还的本金
+            interest = loanAmount.subtract(paidLoan).multiply(rateOfMonth);
+
+            perMonth = capital.add(interest, MC_4_MONEY);
+
+            System.out.println(i + "每月还款：" + perMonth);
+
+            sum = sum.add(perMonth);
+        }
+
+        System.out.println(", 总还款金额：" + sum);
+        return sum;
+    }
+
+    /**
+     * average capital plus interest
      * 等额本息：
      *   〔贷款本金×月利率×（1＋月利率）＾还款月数〕÷〔（1＋月利率）＾还款月数－1〕
      */
-    public void calculate1() {
+    public BigDecimal calculate1() {
         BigDecimal sum = BigDecimal.ZERO;
 
         // 月利率
@@ -51,5 +99,6 @@ public class LPR {
         sum = perMonth.multiply(new BigDecimal(months));
 
         System.out.println("每月还款：" + perMonth + ", 总还款金额：" + sum);
+        return sum;
     }
 }

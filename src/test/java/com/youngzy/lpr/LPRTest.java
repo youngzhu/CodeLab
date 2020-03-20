@@ -23,4 +23,14 @@ public class LPRTest {
     public void testCalculate1() {
         lpr.calculate1();
     }
+
+    @Test
+    public void calculate2() {
+        lpr.calculate2();
+    }
+
+    @Test
+    public void diff() {
+        lpr.diff();
+    }
 }
