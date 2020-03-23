@@ -33,4 +33,9 @@ public class LPRTest {
     public void diff() {
         lpr.diff();
     }
+
+    @Test
+    public void rateTrending() {
+        lpr.rateTrending();
+    }
 }

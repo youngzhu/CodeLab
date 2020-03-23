@@ -1,8 +1,11 @@
 package com.youngzy.lpr;
 
+import com.youngzy.util.ThreadSafeDateUtil;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Date;
 
 /**
  *
@@ -24,6 +27,33 @@ public class LPR {
         this.loanAmount = loanAmount;
         this.loanTerm = loanTerm;
         this.rateOfYear = rateOfYear;
+    }
+
+    /**
+     * 基准利率的变化趋势
+     */
+    public void rateTrending() {
+        Date preDate = null, curDate;
+        BigDecimal preRate = null, curRate;
+
+        int diffDate = 0; // 时间间隔
+        BigDecimal diffRate = BigDecimal.ZERO; // 利率变化
+
+        for (String[] tmp : Constant.LOAN_RATE_5_YEARS) {
+            curDate = ThreadSafeDateUtil.parseDate("yyyy.MM.dd", tmp[0]);
+            curRate = new BigDecimal(tmp[1], new MathContext(3));
+
+            if (preDate != null) {
+                diffDate = ThreadSafeDateUtil.getDiffMonth(preDate, curDate);
+                diffRate = curRate.subtract(preRate);
+            }
+
+            System.out.println(tmp[0] + " - " + diffDate + " 个月后：" + diffRate);
+
+            preDate = curDate;
+            preRate = curRate;
+        }
+
     }
 
     /**
