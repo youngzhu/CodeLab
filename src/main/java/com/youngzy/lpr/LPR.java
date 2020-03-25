@@ -5,7 +5,9 @@ import com.youngzy.util.ThreadSafeDateUtil;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -33,27 +35,52 @@ public class LPR {
      * 基准利率的变化趋势
      */
     public void rateTrending() {
-        Date preDate = null, curDate;
-        BigDecimal preRate = null, curRate;
+        List<Rate> rateList = loadRate();
 
-        int diffDate = 0; // 时间间隔
-        BigDecimal diffRate = BigDecimal.ZERO; // 利率变化
+//        diffRate(rateList);
+        diffRateByPercent(rateList);
+    }
 
+    /**
+     * 按数值显示费率变化情况
+     *
+     * @param rateList
+     */
+    private void diffRate(List<Rate> rateList) {
+        for (Rate tmp : rateList) {
+            System.out.println(tmp.getDiff());
+        }
+    }
+
+    /**
+     * 按百分比显示费率变化情况
+     *
+     * @param rateList
+     */
+    private void diffRateByPercent(List<Rate> rateList) {
+        for (Rate tmp : rateList) {
+            System.out.println(tmp.getDiffByPercent());
+        }
+    }
+
+    private List<Rate> loadRate() {
+        List<Rate> ret = new ArrayList<Rate>();
+
+        Rate cur, pre = null;
+
+        int i = 0;
         for (String[] tmp : Constant.LOAN_RATE_5_YEARS) {
-            curDate = ThreadSafeDateUtil.parseDate("yyyy.MM.dd", tmp[0]);
-            curRate = new BigDecimal(tmp[1], new MathContext(3));
+            cur = new Rate(i++, tmp[1], tmp[0]);
 
-            if (preDate != null) {
-                diffDate = ThreadSafeDateUtil.getDiffMonth(preDate, curDate);
-                diffRate = curRate.subtract(preRate);
+            if (pre != null) {
+                cur.setPre(pre);
             }
 
-            System.out.println(tmp[0] + " - " + diffDate + " 个月后：" + diffRate);
-
-            preDate = curDate;
-            preRate = curRate;
+            pre = cur;
+            ret.add(cur);
         }
 
+        return ret;
     }
 
     /**
