@@ -1,12 +1,8 @@
 package com.youngzy.lpr;
 
-import com.youngzy.util.ThreadSafeDateUtil;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +25,14 @@ public class LPR {
         this.loanAmount = loanAmount;
         this.loanTerm = loanTerm;
         this.rateOfYear = rateOfYear;
+    }
+
+    /**
+     * lpr的变化趋势
+     * 完全复制过去20次的变动幅度
+     */
+    public void lprTrending() {
+        List<Rate> rateList = loadRate();
     }
 
     /**
@@ -137,7 +141,21 @@ public class LPR {
      *   〔贷款本金×月利率×（1＋月利率）＾还款月数〕÷〔（1＋月利率）＾还款月数－1〕
      */
     public BigDecimal calculate1() {
-        BigDecimal sum = BigDecimal.ZERO;
+        // 还款月数
+        int months = loanTerm * 12;
+        BigDecimal sum  = payPerMonth().multiply(new BigDecimal(months));
+
+        System.out.println("总还款金额：" + sum);
+        return sum;
+    }
+
+    /**
+     * 等额本息，每月还款额
+     *
+     * @return
+     */
+    public BigDecimal payPerMonth() {
+        BigDecimal perMonth = BigDecimal.ZERO;
 
         // 月利率
         BigDecimal rateOfMonth = rateOfYear.divide(MONTHS_OF_YEAR, MC_4_RATE);
@@ -152,10 +170,10 @@ public class LPR {
         // 除数
         BigDecimal divisor = factor.pow(months).subtract(BigDecimal.ONE);
 
-        BigDecimal perMonth = dividend.divide(divisor, MC_4_MONEY);
-        sum = perMonth.multiply(new BigDecimal(months));
+        perMonth = dividend.divide(divisor, MC_4_MONEY);
 
-        System.out.println("每月还款：" + perMonth + ", 总还款金额：" + sum);
-        return sum;
+        System.out.println("每月还款：" + perMonth);
+
+        return perMonth;
     }
 }

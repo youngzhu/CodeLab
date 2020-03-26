@@ -1,5 +1,6 @@
 package com.youngzy.lpr;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,5 +38,11 @@ public class LPRTest {
     @Test
     public void rateTrending() {
         lpr.rateTrending();
+    }
+
+    @Test
+    public void payPerMonth() {
+        BigDecimal expected = new BigDecimal("4139.87");
+        Assert.assertEquals(expected, lpr.payPerMonth());
     }
 }
