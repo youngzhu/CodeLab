@@ -20,11 +20,13 @@ public class LPR {
     private BigDecimal loanAmount; // 贷款本金
     private int loanTerm; // 贷款年限
     private BigDecimal rateOfYear; // 年利率
+    private BigDecimal baseRate; // 基准利率
 
-    public LPR(BigDecimal loanAmount, int loanTerm, BigDecimal rateOfYear) {
+    public LPR(BigDecimal loanAmount, int loanTerm, BigDecimal rateOfYear, BigDecimal baseRate) {
         this.loanAmount = loanAmount;
         this.loanTerm = loanTerm;
-        this.rateOfYear = rateOfYear;
+        this.rateOfYear = rateOfYear.multiply(new BigDecimal(0.01));
+        this.baseRate = baseRate.multiply(new BigDecimal(0.01));
     }
 
     /**
