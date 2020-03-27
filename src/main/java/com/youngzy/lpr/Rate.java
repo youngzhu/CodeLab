@@ -17,6 +17,7 @@ public class Rate {
     // 以上字段，对象创建后就不可变
 
     private Rate pre; // 上一期费率
+    private BigDecimal diffRatePercent; // 跟上一期比较的百分比
 
     public Rate(int id, String rateStr, String startDateStr) {
         this.id = id;
@@ -63,6 +64,8 @@ public class Rate {
         int diffDate = ThreadSafeDateUtil.getDiffMonth(pre.getStartDate(), startDate);
         BigDecimal diffRate = rate.subtract(pre.getRate());
 
+        diffRatePercent = diffRate.divide(pre.getRate(), MC_PERCENT);
+
         ret.append("第 ").append(id).append(" 次变化(")
                 .append(ThreadSafeDateUtil.getYear(startDate))
                 .append(")，距上次变化")
@@ -77,9 +80,7 @@ public class Rate {
         if (type == 0) {
             ret.append(diffRate);
         } else {
-            BigDecimal percent = diffRate.divide(pre.getRate(), MC_PERCENT);
-            percent = BigDecimal.TEN.pow(2).multiply(percent);
-            ret.append("(%)：").append(percent);
+            ret.append("(%)：").append(diffRatePercent.multiply(new BigDecimal(100)));
         }
 
         return ret.toString();
@@ -95,5 +96,13 @@ public class Rate {
 
     public void setPre(Rate pre) {
         this.pre = pre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public BigDecimal getDiffRatePercent() {
+        return diffRatePercent;
     }
 }

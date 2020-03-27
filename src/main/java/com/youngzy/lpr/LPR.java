@@ -3,7 +3,9 @@ package com.youngzy.lpr;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -19,22 +21,79 @@ public class LPR {
 
     private BigDecimal loanAmount; // 贷款本金
     private int loanTerm; // 贷款年限
+    private int paidTerm; // 已还年限
     private BigDecimal rateOfYear; // 年利率
     private BigDecimal baseRate; // 基准利率
 
-    public LPR(BigDecimal loanAmount, int loanTerm, BigDecimal rateOfYear, BigDecimal baseRate) {
+    public LPR(BigDecimal loanAmount, int loanTerm, int paidTerm, BigDecimal rateOfYear, BigDecimal baseRate) {
         this.loanAmount = loanAmount;
         this.loanTerm = loanTerm;
-        this.rateOfYear = rateOfYear.multiply(new BigDecimal(0.01));
-        this.baseRate = baseRate.multiply(new BigDecimal(0.01));
+        this.paidTerm = paidTerm;
+        this.rateOfYear = rateOfYear.multiply(new BigDecimal(0.01), MC_4_RATE);
+        this.baseRate = baseRate.multiply(new BigDecimal(0.01), MC_4_RATE);
+    }
+
+    /**
+     * 转为LPR之后
+     */
+    public void afterSwitchToLPR() {
+        BigDecimal sumAll = BigDecimal.ZERO;
+
+        BigDecimal[] rates = lprTrending(loanTerm - paidTerm);
+        
+        BigDecimal floatingRate = rateOfYear.subtract(baseRate);
+
+        for (int i = 0; i < paidTerm; i++) {
+            sumAll = sumAll.add(sumPerYear(baseRate, floatingRate));
+        }
+
+        for (BigDecimal rate : rates) {
+            sumAll = sumAll.add(sumPerYear(rate, floatingRate));
+        }
+
+        System.out.println("总还款额, before：" + calculate1() + ", after：" + sumAll);
+    }
+
+    private BigDecimal sumPerYear(BigDecimal baseRate, BigDecimal floatingRate) {
+        BigDecimal rate = baseRate.add(floatingRate);
+
+        return payPerMonth(rate).multiply(new BigDecimal(12));
     }
 
     /**
      * lpr的变化趋势
      * 完全复制过去20次的变动幅度
      */
-    public void lprTrending() {
+    public BigDecimal[] lprTrending(int size) {
+        BigDecimal[] ret = new BigDecimal[size];
+
         List<Rate> rateList = loadRate();
+
+        diffRate(rateList);
+
+        Map<Integer, Rate> rateMap = new HashMap<Integer, Rate>();
+        for (Rate rate : rateList) {
+            if (rate.getId() > 0) {
+                // 第一个不算，从第二个开始才有变化
+                rateMap.put(rate.getId(), rate);
+            }
+        }
+
+        BigDecimal lpr = baseRate;
+        System.out.println("初始利率 " + lpr);
+
+        int start = rateMap.size() - size + 1;
+        for (int i = 0; i < size; i ++) {
+            BigDecimal diffPercent = rateMap.get(start + i).getDiffRatePercent();
+
+            lpr = lpr.multiply(BigDecimal.ONE.add(diffPercent), MC_4_RATE);
+
+            ret[i] = lpr;
+//            ret[i] = baseRate; // 做验证，即费率没变化，总额也不会有变化
+            System.out.println("第 " + i + " 次变化后 " + lpr);
+        }
+
+        return ret;
     }
 
     /**
@@ -157,10 +216,19 @@ public class LPR {
      * @return
      */
     public BigDecimal payPerMonth() {
+        return this.payPerMonth(rateOfYear);
+    }
+
+    /**
+     * 等额本息，每月还款额
+     *
+     * @return
+     */
+    private BigDecimal payPerMonth(BigDecimal rate) {
         BigDecimal perMonth = BigDecimal.ZERO;
 
         // 月利率
-        BigDecimal rateOfMonth = rateOfYear.divide(MONTHS_OF_YEAR, MC_4_RATE);
+        BigDecimal rateOfMonth = rate.divide(MONTHS_OF_YEAR, MC_4_RATE);
         // （1＋月利率）
         BigDecimal factor = BigDecimal.ONE.add(rateOfMonth);
         // 还款月数

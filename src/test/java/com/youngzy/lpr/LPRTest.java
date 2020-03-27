@@ -2,6 +2,7 @@ package com.youngzy.lpr;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ public class LPRTest {
 
     private static final BigDecimal LOAN_AMOUNT = new BigDecimal("600000"); // 贷款本金
     private static final int LOAN_TERM = 20; // 贷款年限
+    private static final int PAID_TERM = 3; // 已还年限
     private static final BigDecimal BASE_RATE = new BigDecimal("4.8"); // 基准利率（百分比，4.9%）
     private static final BigDecimal EXERCISE_RATE = new BigDecimal("5.537"); // 执行（实际）利率
 
@@ -17,7 +19,7 @@ public class LPRTest {
 
     @Before
     public void init() {
-        lpr = new LPR(LOAN_AMOUNT, LOAN_TERM, EXERCISE_RATE, BASE_RATE);
+        lpr = new LPR(LOAN_AMOUNT, LOAN_TERM, PAID_TERM, EXERCISE_RATE, BASE_RATE);
     }
 
 
@@ -45,5 +47,15 @@ public class LPRTest {
     public void payPerMonth() {
         BigDecimal expected = new BigDecimal("4139.87");
         Assert.assertEquals(expected, lpr.payPerMonth());
+    }
+
+    @Test
+    public void lprTrending() {
+        lpr.lprTrending(LOAN_TERM);
+    }
+
+    @Test
+    public void afterSwitchToLPR() {
+        lpr.afterSwitchToLPR();
     }
 }
