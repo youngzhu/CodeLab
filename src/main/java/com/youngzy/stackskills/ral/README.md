@@ -21,3 +21,12 @@ input -> output
 改变了原来的值。
 1. for each  
 NO output stream
+
+## Recursion
+f(n)=f(n-1)
+
+## Reflection
+性能比正常的编码（如 `new`）差。
+在对性能有要求的情况（如生产）下，尽量不用。
+
+这么说来感觉没啥用武之地啊。。
