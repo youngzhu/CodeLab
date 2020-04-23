@@ -25,6 +25,9 @@ NO output stream
 ## Recursion
 f(n)=f(n-1)
 
+## Annotation
+`@Override` 要以为这个没什么用。看看例子
+
 ## Reflection
 性能比正常的编码（如 `new`）差。
 在对性能有要求的情况（如生产）下，尽量不用。
