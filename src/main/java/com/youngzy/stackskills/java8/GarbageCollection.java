@@ -1,7 +1,7 @@
 package com.youngzy.stackskills.java8;
 
 /**
- *
+ * 设置VM：-verbose:gc -Xms20M -Xmn10m -XX:+PrintGCDetails
  */
 public class GarbageCollection {
     static final int counter = 1000000;
