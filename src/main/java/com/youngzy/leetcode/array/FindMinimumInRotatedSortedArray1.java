@@ -20,13 +20,12 @@ package com.youngzy.leetcode.array;
  *
  * 链接：https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array
  */
-public class FindMinimumInRotatedSortedArray {
+public class FindMinimumInRotatedSortedArray1 {
 
     /**
-     * 跟之前的找峰值很像
-     * 极大值后面即是极小值
+     * 通过首尾比较，判断是否做了旋转
      *
-     * 不错！！！！！！！时间 0
+     * 结果：没啥改善
      *
      * @param nums
      * @return
@@ -39,6 +38,11 @@ public class FindMinimumInRotatedSortedArray {
         }
         if (nums.length == 2) {
             return Math.min(nums[0], nums[1]);
+        }
+
+        // 未旋转
+        if (nums[0] < nums[nums.length - 1]) {
+            return nums[0];
         }
 
         int peakIdx = getPeakIdx(nums);
@@ -64,8 +68,8 @@ public class FindMinimumInRotatedSortedArray {
             }
 
             // 防止两个向上直线，左边很短右边很长的情况
-            // 如 5 1 2 3 4
-            // 第一次取中值后，还是上升趋势，但不能移动 low
+            // 如 5 6 1 2 3 4
+            // 取中值后，还是上升趋势，但不能移动 low
             boolean alwaysUp = nums[0] < nums[peakIdx];
             // 处于上升趋势，则移动 low
             if (alwaysUp
