@@ -59,43 +59,45 @@ public class Search2DMatrix {
             return false;
         }
 
-        int xIdx = 0; // 横轴
-        int yIdx = 0; // 竖轴（只比较第一列，即 matrix[y][0]）
+        // 先用二分法找出所在行
+        int rowIdx = getRowIdx(matrix, target);
 
-        // 先用二分法找出yIdx
-        yIdx = getY(matrix, target);
+        if (rowIdx < 0) return true;
 
-        if (yIdx < 0) return true;
+        // 在指定的行上（即一维数组）使用二分法，继续找目标值
+        int[] rowData = matrix[rowIdx]; // 确定后的一维数组
 
-        // 在横轴上使用二分法
-        int[] rowData = matrix[yIdx];
-        int low = 0, high = cols - 1;
+        int low = 0, high = cols - 1, mid = 0;
         while (low < high) {
-            xIdx = low + (high - low) / 2;
+            mid = low + (high - low) / 2;
 
-            if (rowData[xIdx] == target
+            if (rowData[mid] == target
                     || rowData[low] == target
                     || rowData[high] == target
             ) {
                 return true;
-            } else if (rowData[xIdx] > target) {
-                high = xIdx - 1;
+            }
+
+            if (rowData[mid] > target) {
+                high = mid - 1;
             } else {
-                low = xIdx + 1;
+                low = mid + 1;
             }
         }
 
-        return rowData[xIdx] == target;
+        return rowData[mid] == target;
     }
 
     /**
-     * -10 代表存在
+     * 找到正确的行数 row
+     * （只比较第一列，即 matrix[row][0]）
      *
      * @param matrix
      * @param target
      * @return
+     *      -10 代表存在
      */
-    private int getY(int[][] matrix, int target) {
+    private int getRowIdx(int[][] matrix, int target) {
         int low = 0, high = matrix.length - 1, mid = 0;
 
         int result = high; // 从大值开始，逐步减小
@@ -112,12 +114,15 @@ public class Search2DMatrix {
             if (matrix[mid][0] > target) {
                 high = mid - 1;
 
+                // 逐步缩小目标值
                 result = high;
             } else {
                 low = mid + 1;
             }
         }
 
+        // 这是参考来的代码
+        // 适用情形是：目标值在最后一行，且不是第一个
         if (matrix[result][0] < target) {
             return result;
         }
