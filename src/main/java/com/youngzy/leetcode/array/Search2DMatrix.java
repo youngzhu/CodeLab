@@ -30,13 +30,108 @@ package com.youngzy.leetcode.array;
  * 链接：https://leetcode-cn.com/problems/search-a-2d-matrix
  */
 public class Search2DMatrix {
+
+    /**
+     * 接着完成自己最初的想法
+     *
+     * 首先找到所在行
+     * 再去指定的行搜索
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // 空数组
+        if (matrix == null
+                || matrix.length == 0
+                || matrix[0].length == 0) {
+            return false;
+        }
+
+        // 数组的行 和 列
+        int rows = matrix.length, cols = matrix[0].length;
+
+        // 比最小的还小
+        // 比最大的还大
+        if (matrix[0][0] > target
+              || matrix[rows - 1][cols - 1] < target) {
+            return false;
+        }
+
+        int xIdx = 0; // 横轴
+        int yIdx = 0; // 竖轴（只比较第一列，即 matrix[y][0]）
+
+        // 先用二分法找出yIdx
+        yIdx = getY(matrix, target);
+
+        if (yIdx < 0) return true;
+
+        // 在横轴上使用二分法
+        int[] rowData = matrix[yIdx];
+        int low = 0, high = cols - 1;
+        while (low < high) {
+            xIdx = low + (high - low) / 2;
+
+            if (rowData[xIdx] == target
+                    || rowData[low] == target
+                    || rowData[high] == target
+            ) {
+                return true;
+            } else if (rowData[xIdx] > target) {
+                high = xIdx - 1;
+            } else {
+                low = xIdx + 1;
+            }
+        }
+
+        return rowData[xIdx] == target;
+    }
+
+    /**
+     * -10 代表存在
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    private int getY(int[][] matrix, int target) {
+        int low = 0, high = matrix.length - 1, mid = 0;
+
+        int result = high; // 从大值开始，逐步减小
+
+        while (low < high) {
+            mid = low + (high - low) / 2;
+
+            if (matrix[result][0] == target
+                    || matrix[low][0] == target
+                    || matrix[high][0] == target) {
+                return -10;
+            }
+
+            if (matrix[mid][0] > target) {
+                high = mid - 1;
+
+                result = high;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        if (matrix[result][0] < target) {
+            return result;
+        }
+
+        return result == 0 ? 0 : result - 1;
+    }
+
     /**
      * 学习大神的降维打击法： 将二维数组转换成一维的，再使用二分法
      * @param matrix
      * @param target
      * @return
      */
-    public boolean searchMatrix(int[][] matrix, int target) {
+    public boolean searchMatrix1(int[][] matrix, int target) {
         // 空数组
         if (matrix == null
                 || matrix.length == 0
