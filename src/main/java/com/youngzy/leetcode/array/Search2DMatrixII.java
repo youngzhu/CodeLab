@@ -25,7 +25,46 @@ package com.youngzy.leetcode.array;
  */
 public class Search2DMatrixII {
     /**
+     * 参考大神做法：从右上角开始查找
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // 空数组
+        if (matrix == null
+                || matrix.length == 0
+                || matrix[0].length == 0) {
+            return false;
+        }
+
+        // 数组的行 和 列
+        int rows = matrix.length, cols = matrix[0].length;
+
+        int rowIdx = 0, colIdx = cols - 1; // 右上角
+
+        while (rowIdx < rows && colIdx >= 0) {
+            if (matrix[rowIdx][colIdx] == target) {
+                return true;
+            }
+
+            if (matrix[rowIdx][colIdx] > target) {
+                colIdx --;
+            } else {
+                rowIdx ++;
+            }
+
+        }
+
+        return false;
+    }
+
+    /**
      * 结果：9ms，在末尾的1/3处
+     *
+     * 注意审题：是 “每列”
+     * 之前以为是 第一列 升序了
      *
      * 1 二分法找到第一列小于等于 目标值 的行
      * 2 在该行上，用二分法查找 目标值
@@ -34,7 +73,7 @@ public class Search2DMatrixII {
      * @param target
      * @return
      */
-    public boolean searchMatrix(int[][] matrix, int target) {
+    public boolean searchMatrix0(int[][] matrix, int target) {
         // 空数组
         if (matrix == null
                 || matrix.length == 0
