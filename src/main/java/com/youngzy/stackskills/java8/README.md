@@ -34,3 +34,28 @@ void add(int... args) {
     }
 }
 ````
+
+# Interface
+接口里定义的变量
+```
+double PI = 3.14;
+```
+会自动变成
+```
+public static final double PI = 3.14;
+```
+
+# Inner Class
+- Static Inner Class
+- Member ~
+- Local （在方法内定义的类）
+- Anonymous
+
+# 枚举 Enum
+- 默认就是 `final` `static`
+- 可以当作 `Date` 之类的直接在 类中引用，而不用专门建个文件
+- 可以像抽象类一样，有抽象函数
+
+# 集合
+- HashSet 无序，TreeSet 有序
+
