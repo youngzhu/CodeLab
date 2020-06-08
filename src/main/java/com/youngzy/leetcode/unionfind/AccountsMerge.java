@@ -44,133 +44,93 @@ import java.util.*;
  */
 public class AccountsMerge {
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        List<List<String>> result = new ArrayList<>(accounts.size());
+        UF uf = new UF(1000 * 10);
 
-        // key - email
-        // value - accounts 的 下标，对应姓名
-        Map<String, Integer> rootMap = new HashMap<>();
+        // 为每个email分配一个id
+        Map<String, Integer> mailToId = new HashMap<>();
+        Map<String, String> mailToName = new HashMap<>();
 
-        // 不用name做key，是因为有同名不同人的情况
-        Map<Integer, Set<String>> emailMap = new HashMap<>(accounts.size());
-
-        List<Integer> mergedIdx = new ArrayList<>(accounts.size());
-
-        int idx = 0;
-        Set<String> emailSet;
-        List<String> nameList = new ArrayList<>(accounts.size());
-        for (; idx < accounts.size(); idx++) {
-            emailSet = new HashSet<>();
-
-            List<String> data = accounts.get(idx);
-            nameList.add(data.get(0));
-            for (int i = 1; i < data.size(); i ++) {
-                // email 从第二个开始
-                emailSet.add(data.get(i));
-            }
-
-            emailMap.put(idx, emailSet);
-        }
-
-        // 查找与合并
-        Integer key, anotherKey, newKey;
-        Integer rootKey1, rootKey2;
-        Set<String> value, anotherValue, newValue;
-        int count = 0;
-        for (Map.Entry<Integer, Set<String>> entry : emailMap.entrySet()) {
-            key = entry.getKey();
-            value = entry.getValue();
-
-            // 将同一组的root更新一致
-            rootKey1 = find(key, value, rootMap);
-            if (rootKey1 != key) {
-                updateRoot(rootMap, rootKey1, value);
-            }
-
-            if (mergedIdx.contains(key)) {
-                continue;
-            }
-
-            for (Map.Entry<Integer, Set<String>> anotherEntry : emailMap.entrySet()) {
-                anotherKey = anotherEntry.getKey();
-                anotherValue = anotherEntry.getValue();
-
-                count++;
-
-                // 不是自己，且未合并过
-                if (key != anotherKey
-                        && ! mergedIdx.contains(anotherKey)) {
-
-                    // 将同一组的root更新一致
-                    rootKey2 = find(anotherKey, anotherValue, rootMap);
-                    if (rootKey2 != anotherKey) {
-                        updateRoot(rootMap, rootKey2, anotherValue);
-                    }
-
-                    for (String email : value) {
-                        if (anotherValue.contains(email)) {
-                            // 同一账户，合并
-                            // 查找email最小的idx值，即根
-                            // 因为要将email合并到最小的idx上
-                            newKey = Math.min(rootKey1, rootKey2);
-                            newValue = emailMap.get(newKey);
-                            newValue.addAll(value);
-                            newValue.addAll(anotherValue);
-                            emailMap.put(newKey, newValue);
-
-                            if (newKey.intValue() != key.intValue()) {
-                                mergedIdx.add(key);
-                            }
-                            if (newKey.intValue() != anotherKey.intValue()) {
-                                mergedIdx.add(anotherKey);
-                            }
-
-                            // 更新email的根
-                            updateRoot(rootMap, newKey, newValue);
-
-                            break;
-                        }
-                    }
+        int id = 0;
+        for (List<String> account : accounts) {
+            String baseMail = account.get(1);
+            String name = null;
+            for (String mail : account) {
+                if (name == null) {
+                    name = mail;
+                    continue;
                 }
 
-            }
+                if (! mailToId.containsKey(mail)) {
+                    mailToId.put(mail, id++);
+                }
 
+                mailToName.put(mail, name);
+
+                uf.union(mailToId.get(mail), mailToId.get(baseMail));
+            }
         }
 
-        // 返回处理
-        List<String> rowData, emailList;
-        String name;
-        for (Map.Entry<Integer, Set<String>> entry : emailMap.entrySet()) {
-            if (mergedIdx.contains(entry.getKey())) {
-                continue;
+        Set<String> mailSet;
+        Map<Integer, Set<String>> idToMails = new HashMap<>();
+        Map<Integer, String> idToName = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : mailToId.entrySet()) {
+            id = uf.find(entry.getValue());
+            mailSet = idToMails.get(id);
+
+            if (null == mailSet) {
+                mailSet = new HashSet<>();
             }
 
-            rowData = new ArrayList<>();
-            name = nameList.get(entry.getKey());
-            rowData.add(name);
-            emailList = new ArrayList<>(entry.getValue());
-            Collections.sort(emailList);
-            rowData.addAll(emailList);
+            if (! idToName.containsKey(entry.getValue())) {
+                idToName.put(id, mailToName.get(entry.getKey()));
+            }
 
-            result.add(rowData);
+            mailSet.add(entry.getKey());
+            idToMails.put(id, mailSet);
+        }
+
+        List<List<String>> result = new ArrayList<>();
+        List<String> row, mailList;
+        for (Map.Entry<Integer, Set<String>> entry : idToMails.entrySet()) {
+            row = new ArrayList<>();
+            row.add(idToName.get(entry.getKey()));
+            mailList = new ArrayList<>(entry.getValue());
+            Collections.sort(mailList);
+            row.addAll(mailList);
+
+            result.add(row);
         }
 
         return result;
     }
 
-    private void updateRoot(Map<String, Integer> rootMap, Integer root, Set<String> emailSet) {
-        for (String email : emailSet) {
-//            if (rootMap.getOrDefault(email, Integer.MAX_VALUE) > root) {
-                rootMap.put(email, root);
-//            }
-        }
-    }
+    class UF {
+        private int[] root;
 
-    private Integer find(Integer root, Set<String> emailSet, Map<String, Integer> rootMap) {
-
-        for (String email : emailSet) {
-            root = Math.min(root, rootMap.getOrDefault(email, root));
+        public UF(int size) {
+            this.root = new int[size];
+            for (int i = 0; i < size; i++) {
+                root[i] = i;
+            }
         }
 
-        return root;
+        public void union(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+            if (rootX == rootY) {
+                return;
+            }
+
+            root[rootY] = rootX;
+        }
+
+        private int find(int x) {
+            while (x != root[x]) {
+                root[x] = root[root[x]];
+                x = root[x];
+            }
+
+            return x;
+        }
     }
 }
