@@ -41,7 +41,7 @@ public class UnionFind {
         }
     }
 
-    private int find(int x) {
+    public int find(int x) {
         while (x != root[x]) {
             root[x] = root[root[x]];
             x = root[x];
