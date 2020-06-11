@@ -40,3 +40,8 @@ QueueBuiltWithTwoStacks 时间复杂度：
 如果全是一个操作（都是入队或出队）：O(1)
 其余的：O(M)，M 为操作次数
 
+## Binary Tree
+广度优先：用一个队列实现  
+深度优先：递归
+
+
