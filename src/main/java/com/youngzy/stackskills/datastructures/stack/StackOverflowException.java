@@ -1,4 +1,4 @@
-package com.youngzy.stackskills.dsa.stack;
+package com.youngzy.stackskills.datastructures.stack;
 
 /**
  * Pushing into a full stack

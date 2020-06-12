@@ -1,4 +1,4 @@
-package com.youngzy.stackskills.dsa;
+package com.youngzy.stackskills.datastructures;
 
 /**
  * 计算复杂度时，都假设n足够大

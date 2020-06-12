@@ -1,4 +1,4 @@
-package com.youngzy.stackskills.dsa;
+package com.youngzy.stackskills.datastructures;
 
 import java.util.LinkedList;
 

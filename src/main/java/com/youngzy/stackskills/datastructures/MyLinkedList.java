@@ -1,4 +1,4 @@
-package com.youngzy.stackskills.dsa;
+package com.youngzy.stackskills.datastructures;
 
 public class MyLinkedList<T extends Comparable<T>> implements Cloneable {
     private Node<T> head;
