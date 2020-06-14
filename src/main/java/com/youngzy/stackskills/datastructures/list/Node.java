@@ -1,4 +1,4 @@
-package com.youngzy.stackskills.datastructures;
+package com.youngzy.stackskills.datastructures.list;
 
 public class Node<T extends  Comparable<T>> {
     T data;

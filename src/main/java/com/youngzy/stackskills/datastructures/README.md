@@ -44,4 +44,29 @@ QueueBuiltWithTwoStacks 时间复杂度：
 广度优先：用一个队列实现  
 深度优先：递归
 
+## Binary Search Tree/Ordered Binary Tree
+left child <= node  
+right child > node
+
+应用：插入和查找
+插入：O(logN)
+查找：O(logN)
+
+## Binary Heap
+两种类型：
+- Minimum Heap：node <= child
+- Maximum Hap: node >= child
+
+H-1(倒数第二层)必须都有左右叶子节点
+
+当成一个数组：  
+node index : i  
+left child : 2i + 1  
+right child : 2i + 2  
+parent : (i - 1)/2  
+
+复杂度：  
+insertion：O(logN)  
+access: O(1)  
+remove: O(logN)  
 

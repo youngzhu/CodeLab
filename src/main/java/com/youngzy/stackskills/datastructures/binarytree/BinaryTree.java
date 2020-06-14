@@ -1,8 +1,6 @@
-package com.youngzy.stackskills.datastructures;
+package com.youngzy.stackskills.datastructures.binarytree;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Queue;
+import com.youngzy.stackskills.datastructures.queue.CircularQueue;
 
 public class BinaryTree {
 
@@ -74,12 +72,6 @@ public class BinaryTree {
         depthFirstPreOrder(root.rightChild);
         // visit node
         //...
-    }
-
-    class TreeNode<T> {
-        T data;
-        TreeNode<T> leftChild;
-        TreeNode<T> rightChild;
     }
 }
 

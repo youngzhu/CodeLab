@@ -57,4 +57,11 @@ public class SortTest {
         sort.sort(before);
         assertArrayEquals(after, before);
     }
+
+    @Test
+    public void heapSort() {
+        sort = new HeapSort();
+        sort.sort(before);
+        assertArrayEquals(after, before);
+    }
 }

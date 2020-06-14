@@ -37,3 +37,7 @@ Bubble VS Insertion
 ## 应用 —— 查找
 排序后，用二分法查找，效率更高  
 复杂度：O(logN)
+
+## Heap Sort 堆排序
+时间复杂度：O(NlogN)  
+空间复杂度：O(1)

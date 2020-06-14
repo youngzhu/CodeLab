@@ -1,4 +1,4 @@
-package com.youngzy.stackskills.datastructures;
+package com.youngzy.stackskills.datastructures.queue;
 
 import java.util.Stack;
 

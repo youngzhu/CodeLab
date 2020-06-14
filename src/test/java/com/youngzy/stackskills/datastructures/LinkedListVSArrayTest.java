@@ -1,5 +1,6 @@
 package com.youngzy.stackskills.datastructures;
 
+import com.youngzy.stackskills.datastructures.list.LinkedListVSArray;
 import org.junit.Before;
 import org.junit.Test;
 
