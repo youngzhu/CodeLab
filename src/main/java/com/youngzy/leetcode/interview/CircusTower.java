@@ -22,6 +22,35 @@ import java.util.Stack;
 public class CircusTower {
 
     /**
+     * 二叉树
+     * 原地排序
+     *
+     * 弃了，重开一个，准备用 堆 做一下
+     *
+     * @param height
+     * @param weight
+     * @return
+     */
+    public int bestSeqAtIndex(int[] height, int[] weight) {
+        // 选择排序
+        selectionSort(height, weight);
+        // 冒泡排序
+        // 插入排序
+        // Shell 排序
+        // 合并排序
+        // 快速排序
+
+        print(height);
+        print(weight);
+
+        Stack<Integer> stack = new Stack<>();
+
+        bestSeq(weight, 0 , weight.length - 1, stack);
+
+        return stack.size();
+    }
+
+    /**
      * 本以为很有希望的，结果还是失败了
      *
      * 基本思路是：用Stack存储满足条件的数，从小到大
@@ -37,7 +66,7 @@ public class CircusTower {
      * @param weight
      * @return
      */
-    public int bestSeqAtIndex(int[] height, int[] weight) {
+    public int bestSeqAtIndex1(int[] height, int[] weight) {
         // 选择排序
         selectionSort(height, weight);
         // 冒泡排序
