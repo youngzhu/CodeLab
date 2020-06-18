@@ -70,3 +70,19 @@ insertion：O(logN)
 access: O(1)  
 remove: O(logN)  
 
+## Graph
+Vertex
+Edge
+
+types：有向图 无向图
+
+图的三种表现形式：
+1 相邻矩阵 Adjacent Matrix
+2 相邻列表 list
+3 相邻集合 set
+
+ -| Matrix | List | Set|
+ |---|---|---|---|
+空间| V^2 | E + V | E + V|
+X，Y是否有连接 | 1 | degree of V | lg(degree of V)
+遍历某个点的边 | V | degree of V | degree of V |
