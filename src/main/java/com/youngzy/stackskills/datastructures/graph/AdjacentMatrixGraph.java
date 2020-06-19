@@ -42,4 +42,9 @@ public class AdjacentMatrixGraph extends AbstractGraph {
         return result;
     }
 
+    @Override
+    public int getWeightedEdge(int currentVertexId, int neighbour) {
+        return 0;
+    }
+
 }

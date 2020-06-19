@@ -1,7 +1,6 @@
 package com.youngzy.stackskills.algorithms.shortestpath;
 
 import com.youngzy.stackskills.datastructures.graph.Graph;
-import sun.security.provider.certpath.Vertex;
 
 import java.util.*;
 

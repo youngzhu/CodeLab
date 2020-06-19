@@ -34,6 +34,11 @@ public class AdjacentSetGraph extends AbstractGraph {
         return vertexList.get(vertex).getAdjacentVertices();
     }
 
+    @Override
+    public int getWeightedEdge(int currentVertexId, int neighbour) {
+        return 0;
+    }
+
     static class VertexNode {
         private int vertexId;
         private Set<Integer> adjacentSet;
