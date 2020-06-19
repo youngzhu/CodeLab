@@ -19,10 +19,10 @@ import java.util.Arrays;
  *
  * 链接：https://leetcode-cn.com/problems/circus-tower-lcci
  */
-public class CircusTower3 {
+public class CircusTower4 {
     /**
-     * 好不容易在网上找了一个算法，居然超时了。。
-     * https://stackoverflow.com/questions/38194187/algorithm-for-circus-tower
+     * 还有个C++用递归的
+     * https://stackoverflow.com/questions/39062202/adding-memoization-dynamic-programming
      *
      * @param height
      * @param weight
@@ -46,27 +46,20 @@ public class CircusTower3 {
         System.out.println();
         int result = 1;
 
-        for (int i = 1; i < persons.length; i ++) {
-            for (int j = 0; j < i; j++) {
-                if (answer[j] + 1 > answer[i] && persons[i].weight > persons[j].weight
-                    && persons[i].height > persons[j].height) {
 
-                    answer[i] = answer[j] + 1;
-//                    details[i] = details[j] + persons[i];
-                    if (result < answer[i]) {
-                        result = answer[i];
-                    }
-                }
-
-            }
-        }
 
 //        for (int i = 0; i < persons.length; i++) {
 //            if (answer[i] == result) {
 //                System.out.println(details[i]);
 //            }
 //        }
-        return result;
+        return dp(persons, 0, persons.length - 1, answer);
+    }
+
+    private int dp(Person[] persons, int start, int end, int[] answer) {
+        if (start == persons.length - 1) {
+            return answer[start];
+        }
     }
 
     private static class Person implements Comparable<Person> {
