@@ -60,6 +60,7 @@ public class CircusTower4 {
         if (start == persons.length - 1) {
             return answer[start];
         }
+        return 1;
     }
 
     private static class Person implements Comparable<Person> {
