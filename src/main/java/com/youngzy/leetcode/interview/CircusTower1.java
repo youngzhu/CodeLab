@@ -25,12 +25,120 @@ public class CircusTower1 {
      *
      * 假想一个最轻的人，在最顶层，作为root
      *
+     * 还是失败了。不能用堆或数，要用线性的结构
+     *
      * @param height
      * @param weight
      * @return
      */
     public int bestSeqAtIndex(int[] height, int[] weight) {
+        // 假想一个最轻的人，身高0，体重 0
+        Person fake = new Person(0, 0);
 
-        return 0;
+        Person[] arr = new Person[height.length + 1];
+        arr[0] = fake;
+
+        for (int i = 0; i < height.length; i++) {
+            arr[i + 1] = new Person(height[i], weight[i]);
+        }
+
+        // 堆化
+        heapify(arr);
+
+        return maxDepth(0, arr.length - 1) - 1;
+    }
+
+    public int maxDepth(int root, int maxIdx) {
+        if (root == -1) {
+            return 0;
+        }
+
+        int leftChild = getLeftChildIndex(root, maxIdx);
+        int rightChild = getRightChildIndex(root, maxIdx);
+
+        if (leftChild == -1 && rightChild == -1) {
+            return 0;
+        }
+
+        int leftMaxDepth = 1 + maxDepth(leftChild, maxIdx);
+        int rightMaxDepth = 1 + maxDepth(rightChild, maxIdx);
+
+        return Math.max(leftMaxDepth, rightMaxDepth);
+    }
+
+    private void heapify(Person[] array) {
+        // 从最后一个元素开始，堆化
+        int index = array.length - 1;
+
+        while (index >= 0) {
+            siftDown(array, index, array.length - 1);
+            index --;
+        }
+
+    }
+
+    private void siftDown(Person[] array, int index, int maxIndex) {
+        int leftChildIndex = getLeftChildIndex(index, maxIndex);
+        int rightChildIndex = getRightChildIndex(index, maxIndex);
+
+        // 子节点比父节点小，交换并重新堆化
+        if (leftChildIndex != -1 && array[leftChildIndex].compareTo(array[index]) == -1) {
+            swap(array, leftChildIndex, index);
+            siftDown(array, leftChildIndex, maxIndex);
+        }
+        if (rightChildIndex != -1 && array[rightChildIndex].compareTo(array[index]) == -1) {
+            swap(array, rightChildIndex, index);
+            siftDown(array, rightChildIndex, maxIndex);
+        }
+    }
+
+    private void swap(Person[] array, int i, int j) {
+        Person tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    private int getLeftChildIndex(int index, int maxIndex) {
+        int result = 2 * index + 1;
+        if (result > maxIndex) {
+            return -1;
+        }
+
+        return result;
+    }
+
+    private int getRightChildIndex(int index, int maxIndex) {
+        int result = 2 * index + 2;
+        if (result > maxIndex) {
+            return -1;
+        }
+
+        return result;
+    }
+
+    private int getParentIndex(int index, int maxIndex) {
+        if (index < 0 || index > maxIndex) {
+            return -1;
+        }
+
+        return (index - 1) / 2;
+    }
+
+    private static class Person implements Comparable<Person> {
+        int height, weight;
+
+        public Person(int height, int weight) {
+            this.height = height;
+            this.weight = weight;
+        }
+
+        @Override
+        public int compareTo(Person o) {
+            if (this.height < o.height && this.weight < o.weight) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
     }
 }

@@ -7,11 +7,19 @@ import static org.junit.Assert.*;
 
 public class CircusTowerTest {
 
-    CircusTower ct;
+    CircusTower3 ct;
 
     @Before
     public void setUp() throws Exception {
-        ct = new CircusTower();
+        ct = new CircusTower3();
+    }
+
+    @Test
+    public void test4() {
+        int[] height = {3468,  3468,  3468,  3467,  3466,  3466,  3466,  3466};
+        int[] weight = {4905,2659,8319,200,5020,2265,9954,2967};
+
+        assertEquals(2, ct.bestSeqAtIndex(height, weight));
     }
 
     @Test
