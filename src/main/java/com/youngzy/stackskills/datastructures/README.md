@@ -86,3 +86,7 @@ types：有向图 无向图
 空间| V^2 | E + V | E + V|
 X，Y是否有连接 | 1 | degree of V | lg(degree of V)
 遍历某个点的边 | V | degree of V | degree of V |
+
+## Minimum Spanning Tree 最小生成树
+是图的一部分，包含图的所有顶点，但没有环。  
+最小：权重最小的边
