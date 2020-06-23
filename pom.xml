@@ -58,6 +58,17 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!-- JDK11 之后 就不再包含 JavaFX -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11</version>
+        </dependency>
 
     </dependencies>
     
