@@ -24,6 +24,8 @@ public class CircusTower4 {
      * 还有个C++用递归的
      * https://stackoverflow.com/questions/39062202/adding-memoization-dynamic-programming
      *
+     * 算法可以，但还是超时。。。
+     *
      * @param height
      * @param weight
      * @return
@@ -32,35 +34,45 @@ public class CircusTower4 {
         int[] answer = new int[height.length];
 
         Person[] persons = new Person[height.length];
-//        String[] details = new String[height.length];
 
         for (int i = 0; i < height.length; i++) {
             answer[i] = 1;
             persons[i] = new Person(height[i], weight[i]);
-//            details[i] = persons[i].toString();
         }
         Arrays.sort(persons);
-//        for (int i = 0; i < persons.length; i++) {
-//                System.out.print(persons[i]);
-//        }
-        System.out.println();
-        int result = 1;
+        dp(persons, 0, persons.length - 1, answer);
 
-
-
-//        for (int i = 0; i < persons.length; i++) {
-//            if (answer[i] == result) {
-//                System.out.println(details[i]);
-//            }
-//        }
-        return dp(persons, 0, persons.length - 1, answer);
+//        Arrays.sort(answer);
+//        return answer[answer.length - 1];
+        int result = 0;
+        for (int i = 0; i < answer.length; i ++) {
+            if (result < answer[i]) {
+                result = answer[i];
+            }
+        }
+        return result;
     }
 
     private int dp(Person[] persons, int start, int end, int[] answer) {
         if (start == persons.length - 1) {
             return answer[start];
         }
-        return 1;
+
+        dp(persons, start + 1, persons.length - 1, answer);
+
+        int idx = start + 1;
+        while (idx <= end) {
+            if (answer[start] < answer[idx] + 1
+                    && persons[start].height < persons[idx].height
+                    && persons[start].weight < persons[idx].weight) {
+                answer[start] = answer[idx] + 1;
+                // 不能break，只能一个个地去比较
+//                break;
+            }
+            idx ++;
+        }
+
+        return answer[start];
     }
 
     private static class Person implements Comparable<Person> {

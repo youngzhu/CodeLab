@@ -7,11 +7,11 @@ import static org.junit.Assert.*;
 
 public class CircusTowerTest {
 
-    CircusTower3 ct;
+    CircusTower4 ct;
 
     @Before
     public void setUp() throws Exception {
-        ct = new CircusTower3();
+        ct = new CircusTower4();
     }
 
     @Test
