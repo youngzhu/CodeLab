@@ -69,6 +69,13 @@ public class CircusTower4 {
                 // 不能break，只能一个个地去比较
 //                break;
             }
+
+            // 就算后面的（idx~end）都满足，还是小于已有值answer[start]
+            // 说明已经是最优了
+            // 对效率好像没影响。。
+            if (answer[start] > answer[idx] + (end - idx)) {
+                break;
+            }
             idx ++;
         }
 
