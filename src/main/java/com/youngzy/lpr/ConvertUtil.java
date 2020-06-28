@@ -1,27 +1,19 @@
 package com.youngzy.lpr;
 
+import com.youngzy.util.ResourceFileUtil;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.regex.Matcher;
 
 /**
  * 转换工具
  *
  * 将原始的信息转换成想要的信息格式
  */
-public abstract class ConvertUtil {
+abstract class ConvertUtil {
 
     public static void convertRate() throws Exception {
-        Object o = System.getProperties();
-
-        String projectDir = System.getProperty("user.dir");
-        String separator = System.getProperty("file.separator");
-        // windows下File.separator为\，需要Matcher.quoteReplacement(File.separator)获取。
-        separator = Matcher.quoteReplacement(separator);
-
-        String path = projectDir + ".src.main.resources.lpr.";
-        path = path.replaceAll("\\.", separator);
-
+        String path = ResourceFileUtil.getMainResourcePath("lpr");
         System.out.println(path);
 
         BufferedReader br = new BufferedReader(new FileReader(path + "rate.html"));
