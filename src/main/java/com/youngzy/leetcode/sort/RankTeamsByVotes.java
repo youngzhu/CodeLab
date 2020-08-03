@@ -69,6 +69,8 @@ public class RankTeamsByVotes {
         // 剩余未被排序的
         Set<Team> remain = new HashSet<>();
 
+        Stack<Team> paralleling = new Stack<>(); // 并列
+
         int no = 0;
         while (no < maxNo) {
             System.out.println(no);
@@ -98,7 +100,7 @@ public class RankTeamsByVotes {
                 List<Team> list = new ArrayList<>(xx);
                 Collections.sort(list);
 
-                Stack<Team> paralleling = new Stack<>(); // 并列
+                paralleling = new Stack<>(); // 并列
                 for (Team team : list) {
                     if (paralleling.isEmpty()) {
                         paralleling.add(team);
@@ -170,6 +172,12 @@ public class RankTeamsByVotes {
 
             }
 
+        }
+
+        int idx = result.length - 1;
+        while (! paralleling.isEmpty()) {
+            // 并列，按字母顺序输出
+            result[idx --] = paralleling.pop().code;
         }
 
         return new String(result);

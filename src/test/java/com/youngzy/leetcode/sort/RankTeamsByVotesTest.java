@@ -9,6 +9,21 @@ public class RankTeamsByVotesTest {
     RankTeamsByVotes rank = new RankTeamsByVotes();
 
     @Test
+    public void test3() {
+        String expected = "AXYB";
+
+        // 票数完全一样，按字母顺序排列
+        assertEquals(expected, rank.rankTeams(new String[]{"AXYB","AYXB","AXYB","AYXB"}));
+    }
+    @Test
+    public void test2() {
+        String expected = "ABC";
+
+        // 票数完全一样，按字母顺序排列
+        assertEquals(expected, rank.rankTeams(new String[]{"BCA","CAB","CBA","ABC","ACB","BAC"}));
+    }
+
+    @Test
     public void test1() {
         String expected = "AB";
 
