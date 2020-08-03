@@ -98,40 +98,69 @@ public class RankTeamsByVotes {
                 List<Team> list = new ArrayList<>(xx);
                 Collections.sort(list);
 
-                List<Team> paralleling = new ArrayList<>(); // 并列
+                Stack<Team> paralleling = new Stack<>(); // 并列
                 for (Team team : list) {
+                    if (paralleling.isEmpty()) {
+                        paralleling.add(team);
+                    } else {
+                        if (team.compareTo(paralleling.peek()) == 0) {
+                            paralleling.add(team);
+                        } else {
+                            break;
+                        }
+                    }
 
                 }
 
-                while (xx.size() != 0) {
-                    if (xx.size() == 1) {
-                        done.add(list.get(0));
-                        result[no++] = list.get(0).code;
+                while (paralleling.size() != 0) {
+                    if (paralleling.size() == 1) {
+                        done.add(paralleling.get(0));
+                        result[no++] = paralleling.get(0).code;
 
-                        remain.remove(list.get(0));
-                        xx.clear();
+                        remain.remove(paralleling.get(0));
+                        paralleling.pop();
                         break;
                     }
 
                     // 查看下个名次
-
+                    Stack<Team> nextParalleling = new Stack<>();
                     int offset = 1;
-                    while (paralleling.size() != 1 && no + offset < maxNo) {
-                        paralleling = new ArrayList<>();
-                        for (Team c : eachNo[no]) {
+                    while (no + offset < maxNo
+                            && nextParalleling.isEmpty()) {
+
+                        list = new ArrayList<>();
+                        for (Team c : paralleling) {
                             if (eachNo[no + offset].contains(c)) {
-                                paralleling.add(c);
+                                list.add(c);
                             }
                         }
+
+                        Collections.sort(list);
+
+                        for (Team team : list) {
+                            if (nextParalleling.isEmpty()) {
+                                nextParalleling.add(team);
+                            } else {
+                                if (team.compareTo(nextParalleling.peek()) == 0) {
+                                    nextParalleling.add(team);
+                                } else {
+                                    break;
+                                }
+                            }
+
+                        }
+
                         remain.addAll(eachNo[no + offset]);
                         offset++;
                     }
 
-                    if (paralleling.size() == 1) {
-                        done.add(paralleling.get(0));
-                        xx.remove(paralleling.get(0));
-                        remain.remove(paralleling.get(0));
-                        result[no++] = paralleling.get(0).code;
+                    if (nextParalleling.size() == 1) {
+                        Team team = nextParalleling.pop();
+
+                        done.add(team);
+                        paralleling.remove(team);
+                        remain.remove(team);
+                        result[no++] = team.code;
                     } else {
                         no++;
                         break;
@@ -213,7 +242,7 @@ public class RankTeamsByVotes {
             if (this == o) return 0;
             if (o == null || getClass() != o.getClass()) return 1;
             Team team = (Team) o;
-            return times.compareTo(team.times);
+            return - times.compareTo(team.times);
         }
     }
 }
