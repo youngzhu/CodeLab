@@ -59,198 +59,82 @@ import java.util.*;
  */
 public class RankTeamsByVotes {
     public String rankTeams(String[] votes) {
-        int maxNo = votes[0].length(); // 最大名次，也即人数，从0开始
-        char[] result = new char[maxNo];
+        Map<Character, Team> map = buildTeam(votes);
+        List<Team> list = new ArrayList<>(map.values());
 
-        HashSet<Team> done = new HashSet<>(maxNo); // 已排序的字母集合
-        // 每个名次的投票结果
-        Set<Team> eachNo[] = getEachVote(votes);
+        // 排名
+        Collections.sort(list);
 
-        // 剩余未被排序的
-        Set<Team> remain = new HashSet<>();
-
-        Stack<Team> paralleling = new Stack<>(); // 并列
-
-        int no = 0;
-        while (no < maxNo) {
-            System.out.println(no);
-            if (remain.size() == 1) {
-                List<Team> list = new ArrayList(remain);
-                done.add(list.get(0));
-                result[no++] = list.get(0).code;
-
-                remain.clear();
-                continue;
-            }
-
-            remain.addAll(eachNo[no]);
-            // 将已排序的过滤掉
-            for (Team team : done) {
-                eachNo[no].remove(team);
-                remain.remove(team);
-            }
-            if (eachNo[no].size() == 1) {
-                List<Team> list = new ArrayList(eachNo[no]);
-                done.add(list.get(0));
-                remain.remove(list.get(0));
-                result[no++] = list.get(0).code;
-            } else {
-                // 有并列
-                Set<Team> xx = eachNo[no];
-                List<Team> list = new ArrayList<>(xx);
-                Collections.sort(list);
-
-                paralleling = new Stack<>(); // 并列
-                for (Team team : list) {
-                    if (paralleling.isEmpty()) {
-                        paralleling.add(team);
-                    } else {
-                        if (team.compareTo(paralleling.peek()) == 0) {
-                            paralleling.add(team);
-                        } else {
-                            break;
-                        }
-                    }
-
-                }
-
-                while (paralleling.size() != 0) {
-                    if (paralleling.size() == 1) {
-                        done.add(paralleling.get(0));
-                        result[no++] = paralleling.get(0).code;
-
-                        remain.remove(paralleling.get(0));
-                        paralleling.pop();
-                        break;
-                    }
-
-                    // 查看下个名次
-                    Stack<Team> nextParalleling = new Stack<>();
-                    int offset = 1;
-                    while (no + offset < maxNo
-                            && nextParalleling.isEmpty()) {
-
-                        list = new ArrayList<>();
-                        for (Team c : paralleling) {
-                            if (eachNo[no + offset].contains(c)) {
-                                list.add(c);
-                            }
-                        }
-
-                        Collections.sort(list);
-
-                        for (Team team : list) {
-                            if (nextParalleling.isEmpty()) {
-                                nextParalleling.add(team);
-                            } else {
-                                if (team.compareTo(nextParalleling.peek()) == 0) {
-                                    nextParalleling.add(team);
-                                } else {
-                                    break;
-                                }
-                            }
-
-                        }
-
-                        remain.addAll(eachNo[no + offset]);
-                        offset++;
-                    }
-
-                    if (nextParalleling.size() == 1) {
-                        Team team = nextParalleling.pop();
-
-                        done.add(team);
-                        paralleling.remove(team);
-                        remain.remove(team);
-                        result[no++] = team.code;
-                    } else {
-                        no++;
-                        break;
-                    }
-
-                }
-
-            }
-
+        // 排名后按顺序输出
+        char[] ans = new char[list.size()];
+        for (int i = 0; i < list.size(); i ++) {
+            ans[i] = list.get(i).code;
         }
 
-        int idx = result.length - 1;
-        while (! paralleling.isEmpty()) {
-            // 并列，按字母顺序输出
-            result[idx --] = paralleling.pop().code;
-        }
-
-        return new String(result);
+        return new String(ans);
     }
 
-    /**
-     * 获得每个名次的投票结果
-     *
-     * @param votes
-     * @return
-     */
-    private Set<Team>[] getEachVote(String[] votes) {
-        int maxNo = votes[0].length(); // 最大名次，也即人数，从0开始
-        Set<Team> set[] = new Set[maxNo];
+    private Map<Character, Team> buildTeam(String[] votes) {
+        Map<Character, Team> map = new HashMap<>();
 
-        // 初始化
-//        for (int i = 0; i < maxNo; i++) {
-//            set[i] = new HashSet<>();
-//        }
-
-        for (int no = 0; no < maxNo; no++) {
-            int[] arr = new int[26];
-            for (String vote : votes) {
-                char c = vote.charAt(no);
-                arr[c - 'A'] ++;
-            }
-
-            Set<Team> teams = new HashSet<>();
-            for (char c = 'A'; c <= 'Z'; c++) {
-                int times = arr[c - 'A'];
-                if (times > 0) {
-                    Team team = new Team(c, times);
-                    teams.add(team);
-                }
-            }
-
-            set[no] = teams;
+        // 利用第一轮投票，把所有team都放到map中
+        // 后面就不用判断是否存在，直接get就行了
+        String firstRound = votes[0];
+        for (int rank = 0; rank < firstRound.length(); rank ++) {
+            char code = firstRound.charAt(rank);
+            Team team = new Team(code, rank);
+            map.put(code, team);
         }
 
-        return set;
+        if (votes.length > 1) {
+            for (int i = 1; i < votes.length; i ++) {
+                for (int rank = 0; rank < firstRound.length(); rank ++) {
+                    char code = votes[i].charAt(rank);
+                    Team team = map.get(code);
+                    team.ranking[rank] ++; // 获票次数加一
+                }
+            }
+        }
+
+        return map;
     }
 
     /**
      * 辅助类
+     *
+     * 将比较放在类里，和新建一个比较器，没太大差别
      */
     private static class Team implements Comparable {
         Character code;// 代号
-        Integer times; // 某一名次被提名的次数
+        // 名次
+        // idx 表示名次，0-25
+        // 值 表示该名次被提名的次数
+        // 例如，ranking[0]=2，表示第一名有2票
+        int[] ranking = new int[26];
 
-        public Team(Character code, int times) {
+        public Team(Character code, int rank) {
             this.code = code;
-            this.times = times;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Team team = (Team) o;
-            return code.equals(team.code);
-        }
-
-        @Override
-        public int hashCode() {
-            return code.hashCode();
+            ranking[rank] = 1;
         }
 
         @Override
         public int compareTo(Object o) {
-            if (this == o) return 0;
-            if (o == null || getClass() != o.getClass()) return 1;
-            Team team = (Team) o;
-            return - times.compareTo(team.times);
+            Team another = (Team)o;
+            int[] ranking2 = another.ranking;
+
+            for (int i = 0; i < ranking.length; i++) {
+                // 票数多的在前，所以 2 - 1
+                int dif = ranking2[i] - ranking[i];
+                if (dif != 0) {
+                    // 比较票数
+                    return dif;
+                }
+
+            }
+
+            // 票数相同，则按字母顺序
+            return code.compareTo(another.code);
         }
     }
+
 }
