@@ -1,10 +1,13 @@
 package com.youngzy.stackskills.dp.p16state.gumball;
 
-import com.youngzy.stackskills.dp.p16state.gumball.v0.GumballMachine;
+import com.youngzy.stackskills.dp.p16state.gumball.v1.GumballMachine;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * 升级的宗旨：不改变原有功能，又能适应新的需求
+ */
 public class GumballMachineTest {
 
     @Test
@@ -58,6 +61,11 @@ public class GumballMachineTest {
         assertEquals("糖果已售罄，机器暂停使用，无法获取糖果", gm.result);
         gm.ejectQuarter();
         assertEquals("糖果已售罄，机器暂停使用，无法退币", gm.result);
+    }
+
+    @Test
+    public void testV2() {
+
     }
 
 }
