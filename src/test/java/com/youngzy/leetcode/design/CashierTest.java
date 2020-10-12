@@ -11,7 +11,7 @@ public class CashierTest {
         int[] products = {1, 2, 3, 4, 5, 6, 7};
         int[] prices = {100, 200, 300, 400, 300, 200, 100};
 //        Cashier cashier = new Cashier0(3,50, products, prices);
-        Cashier cashier = new Cashier2(3,50, products, prices);
+        Cashier cashier = new Cashier3(3,50, products, prices);
 
         double delta = 0.1;
         int[] purchasedProducts = {1, 2};

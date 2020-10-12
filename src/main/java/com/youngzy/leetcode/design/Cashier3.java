@@ -1,26 +1,30 @@
 package com.youngzy.leetcode.design;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 真•蝇量模式 Flyweight Pattern
  *
- * 效率跟普通版（V0）差不多
+ * 在上一个版本基础上优化一下：动态指定pool的大小
+ * 期望可以减少空间的占用
+ *
+ * 测试结果：没啥进步
  */
-public class Cashier2 implements Cashier {
-    // 最多有1000种不同的价格
-    private static final int MAX_PRICE_NUMBER = 1000;
-
+public class Cashier3 implements Cashier {
     // 不能用static
     // 单个测试没问题，提交测试就会报错了
     int count = 1; // 计数器，注意不能从0开始
 
-    Factory factory = new Factory(MAX_PRICE_NUMBER);
-
     int n;
     double discountPercent;
-//    int[] products, prices;
+
+    // 商品和价格的对应关系
     Map<Integer, Integer> pp;
+    // 为每一个不同的价格指定一个唯一id
+    Map<Integer, Integer> priceMap;
+
+    Factory factory;
 
     /**
      *
@@ -29,17 +33,22 @@ public class Cashier2 implements Cashier {
      * @param products - 超市中的商品列表
      * @param prices - 各商品的价格
      */
-    public Cashier2(int n, int discount, int[] products, int[] prices) {
+    public Cashier3(int n, int discount, int[] products, int[] prices) {
         this.n = n;
         this.discountPercent = 1 - discount / 100.0;
 
-//        this.products = products;
-//        this.prices = prices;
-
         pp = new HashMap<>();
+        priceMap = new HashMap<>();
+        int priceId = 0;
         for (int i = 0; i < prices.length; i++) {
             pp.put(products[i], prices[i]);
+
+            if (! priceMap.containsKey(prices[i])) {
+                priceMap.put(prices[i], priceId++);
+            }
         }
+
+        factory = new Factory(priceMap.size());
     }
 
     /**
@@ -86,10 +95,11 @@ public class Cashier2 implements Cashier {
         }
 
         public Product getProduct(int price) {
-            if (pool[price] == null) {
-                pool[price] = new Product(price);
+            int priceId = priceMap.get(price);
+            if (pool[priceId] == null) {
+                pool[priceId] = new Product(price);
             }
-            return pool[price];
+            return pool[priceId];
         }
     }
 }
