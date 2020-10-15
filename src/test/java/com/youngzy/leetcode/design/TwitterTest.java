@@ -10,7 +10,7 @@ public class TwitterTest {
 
     @Test
     public void test() {
-        Twitter twitter = new Twitter();
+        Twitter twitter = new Twitter1();
 
         // 用户1发送了一条新推文 (用户id = 1, 推文id = 5).
         twitter.postTweet(1, 5);
