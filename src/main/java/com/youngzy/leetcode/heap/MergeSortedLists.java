@@ -43,9 +43,7 @@ public class MergeSortedLists {
     PriorityQueue<ListNode> heap;
 
     public MergeSortedLists() {
-        // PriorityQueue 这个类是最大堆，即最大值在顶部
-        // 但是给出的列表是从小到大排列的
-        // 所以这里需要转换一下，最小值放在顶部
+        // PriorityQueue 这个类是最小堆，即最小值在顶部
         heap = new PriorityQueue<>(new Comparator<ListNode>() {
             @Override
             public int compare(ListNode o1, ListNode o2) {
