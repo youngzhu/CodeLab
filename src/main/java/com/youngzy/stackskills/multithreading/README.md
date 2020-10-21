@@ -25,3 +25,9 @@ Thread.join() | Future.get()
 
 关键字 `synchronized` 作用的是实例（instance），所以对 `static` 变量无效
 
+| |Old-School | New School|
+|---|---|---|
+接口| Runnable | Callable |
+类| Thread | Executor |
+终止线程 | Thread.interrupt() | Future.cancel() |
+等待线程结束 | Thread.join() | Future.get() |
