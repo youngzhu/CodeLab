@@ -18,8 +18,9 @@ public class MemoizerFinal<A, V> implements Computable<A, V> {
     }
 
     public V compute(final A arg) throws InterruptedException {
-        while (true) {
+//        while (true) {
             // 没看明白，为什么要 循环
+        // 测试了一下，没有，一样可以啊
             Future<V> result = cache.get(arg);
             if (result == null) {
                 Callable<V> eval = new Callable<V>() {
@@ -41,6 +42,6 @@ public class MemoizerFinal<A, V> implements Computable<A, V> {
             } catch (ExecutionException e) {
                 throw LaunderThrowable.launderThrowable(e.getCause());
             }
-        }
+//        }
     }
 }

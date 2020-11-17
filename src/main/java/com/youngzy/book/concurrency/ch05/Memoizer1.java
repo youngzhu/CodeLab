@@ -1,5 +1,7 @@
 package com.youngzy.book.concurrency.ch05;
 
+import org.apache.commons.math3.random.RandomDataGenerator;
+
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,10 @@ interface Computable<A, V> {
 class ExpensiveFunction implements Computable<String, BigInteger> {
     @Override
     public BigInteger compute(String arg) throws InterruptedException {
+        // 框定10分钟，1000次计算，大概每次 600ms
+        // 随机停顿100-500ms
+        int random = new RandomDataGenerator().nextInt(100, 500);
+        Thread.sleep(random);
         return new BigInteger(arg);
     }
 }
