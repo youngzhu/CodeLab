@@ -7,9 +7,9 @@ import java.util.Objects;
 /**
  * 1396. 设计地铁系统
  *
- * 试试封装对象和蝇量模式
+ * 试试封装对象
  *
- * 封装后稍微好点：11x 变为 10x ms
+ * 封装（将进站出站封装为对象，而不是字符串拼接）后稍微好点：11x 变为 10y ms
  *
  */
 public class UndergroundSystem3 implements UndergroundSystem {

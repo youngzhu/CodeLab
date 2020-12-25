@@ -8,7 +8,7 @@ public class UndergroundSystemTest {
 
     @Test
     public void test() {
-        UndergroundSystem undergroundSystem = new UndergroundSystem3();
+        UndergroundSystem undergroundSystem = new UndergroundSystem4();
 
         undergroundSystem.checkIn(45, "Leyton", 3);
         undergroundSystem.checkIn(32, "Paradise", 8);
