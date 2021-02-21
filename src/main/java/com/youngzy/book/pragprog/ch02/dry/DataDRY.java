@@ -3,8 +3,6 @@ package com.youngzy.book.pragprog.ch02.dry;
 /*
 数据中的重复
  */
-public class DataDRY {
-}
 
 /*
 看上去挺有道理，一条线有起点和终点，也有长度。
