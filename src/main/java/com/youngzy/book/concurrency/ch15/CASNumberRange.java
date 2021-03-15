@@ -1,14 +1,11 @@
 package com.youngzy.book.concurrency.ch15;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
-
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 15-3 通过CAS来维持包含多个变量的不变性条件
  */
 public class CASNumberRange {
-    @Immutable
     private static class IntPair {
         // 不变性条件：lower <= upper
         final int lower;
