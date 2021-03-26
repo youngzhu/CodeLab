@@ -11,7 +11,7 @@ public class PalindromicSubstringsTest {
 
     @Before
     public void setUp() throws Exception {
-        ps = new PalindromicSubstrings2();
+        ps = new PalindromicSubstrings3();
     }
 
     @Test
