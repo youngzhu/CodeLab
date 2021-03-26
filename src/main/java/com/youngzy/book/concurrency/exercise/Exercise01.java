@@ -1,8 +1,6 @@
 package com.youngzy.book.concurrency.exercise;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 对一组数据做2个校验：
@@ -20,8 +18,44 @@ public class Exercise01 {
      * @return
      */
     public String checkDuplication(int[] data) {
+        long start = System.currentTimeMillis();
 
-        return null;
+//        Set<Integer> uniqueData = new HashSet<>(data.length);
+//        Set<Integer> alerts = new HashSet<>(MAX_ALERT_RECORDS);
+        List<Integer> uniqueData = new ArrayList<>(data.length);
+        List<Integer> alerts = new ArrayList<>(MAX_ALERT_RECORDS);
+
+        String result = "";
+
+        int counter = 0;
+        for (int num : data) {
+            if (uniqueData.contains(num)) {
+                if (alerts.size() < MAX_ALERT_RECORDS) {
+                    alerts.add(num);
+                    counter++;
+                }
+            } else {
+                uniqueData.add(num);
+
+                // 时常太短，看不出差别
+                // 加入随机休眠
+                try {
+                    Thread.sleep(new Random().nextInt(3));
+                } catch (InterruptedException e) {
+                }
+            }
+        }
+
+        if (alerts.size() > 0) {
+            result = "存在重复数据：";
+            result += alerts.toString();
+            if (counter > MAX_ALERT_RECORDS) {
+                result += "等";
+            }
+        }
+
+        System.out.println(data.length + "-重复校验耗时-" + (System.currentTimeMillis() - start));
+        return result;
     }
 
     /**
@@ -46,13 +80,13 @@ public class Exercise01 {
                     outRange.add(counter, num);
                 }
                 counter++;
+            }
 
-                // 时常太短，看不出差别
-                // 加入随机休眠
-                try {
-                    Thread.sleep(new Random().nextInt(100));
-                } catch (InterruptedException e) {
-                }
+            // 时常太短，看不出差别
+            // 加入随机休眠
+            try {
+                Thread.sleep(new Random().nextInt(3));
+            } catch (InterruptedException e) {
             }
         }
 
@@ -64,7 +98,7 @@ public class Exercise01 {
             result += "超出范围";
         }
 
-        System.out.println(data.length + "-耗时-" + (System.currentTimeMillis() - start));
+        System.out.println(data.length + "-范围校验耗时-" + (System.currentTimeMillis() - start));
         return result;
     }
 }

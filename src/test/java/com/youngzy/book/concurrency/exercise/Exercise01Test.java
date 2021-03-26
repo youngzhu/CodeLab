@@ -23,6 +23,7 @@ public class Exercise01Test {
             DATA_100[i] = i;
         }
         DATA_100[98] = 101;
+        DATA_100[95] = 0;
 
         Random random = new Random();
         // 1000 初始化
@@ -43,6 +44,17 @@ public class Exercise01Test {
 
     @Test
     public void checkDuplication() {
+        String result = checker.checkDuplication(DATA_100);
+        assertEquals("存在重复数据：[0]", result);
+
+        result = checker.checkDuplication(DATA_1000);
+        System.out.println(result);
+
+        result = checker.checkDuplication(DATA_10000);
+        System.out.println(result);
+
+        result = checker.checkDuplication(DATA_10000);
+        System.out.println(result);
     }
 
     @Test
