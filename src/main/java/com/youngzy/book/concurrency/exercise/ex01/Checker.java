@@ -1,14 +1,12 @@
-package com.youngzy.book.concurrency.exercise;
+package com.youngzy.book.concurrency.exercise.ex01;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-/**
- * 对一组数据做2个校验：
- * 1. 是否有重复数据
- * 2. 是否超出了指定范围
- */
-public class Exercise01 {
+public class Checker {
     private static final int MAX_ALERT_RECORDS = 10;
+    private static final int MAX_SLEEP_MILLIS = 5;
 
     /**
      * 校验重复数据
@@ -20,7 +18,15 @@ public class Exercise01 {
     public String checkDuplication(int[] data) {
         long start = System.currentTimeMillis();
 
+        /*
+        list, set 差别不大
+                    100 1000    10000   100000
+         list       299 1286    13717   145714
+         hashset    378 1895    14110   137264
+         treeset    321 1519    13773   140513
+         */
 //        Set<Integer> uniqueData = new HashSet<>(data.length);
+//        Set<Integer> uniqueData = new TreeSet<>();
 //        Set<Integer> alerts = new HashSet<>(MAX_ALERT_RECORDS);
         List<Integer> uniqueData = new ArrayList<>(data.length);
         List<Integer> alerts = new ArrayList<>(MAX_ALERT_RECORDS);
@@ -31,8 +37,10 @@ public class Exercise01 {
         for (int num : data) {
             if (uniqueData.contains(num)) {
                 if (alerts.size() < MAX_ALERT_RECORDS) {
-                    alerts.add(num);
-                    counter++;
+                    if (!alerts.contains(num)) {
+                        alerts.add(num);
+                        counter++;
+                    }
                 }
             } else {
                 uniqueData.add(num);
@@ -40,7 +48,7 @@ public class Exercise01 {
                 // 时常太短，看不出差别
                 // 加入随机休眠
                 try {
-                    Thread.sleep(new Random().nextInt(3));
+                    Thread.sleep(new Random().nextInt(MAX_SLEEP_MILLIS));
                 } catch (InterruptedException e) {
                 }
             }
@@ -54,7 +62,7 @@ public class Exercise01 {
             }
         }
 
-        System.out.println(data.length + "-重复校验耗时-" + (System.currentTimeMillis() - start));
+//        System.out.println(data.length + "-重复校验耗时-" + (System.currentTimeMillis() - start));
         return result;
     }
 
@@ -71,21 +79,22 @@ public class Exercise01 {
 
         String result = "";
 
-        List<Integer> outRange = new ArrayList<>(MAX_ALERT_RECORDS);
+        List<Integer> outRange = new ArrayList<>();
 
-        int counter = 0;
+        int counter = 0; // 总的重复数
+        int alertCounter = 0;
         for (int num : data) {
             if (num < low || num > high) {
-                if (counter < MAX_ALERT_RECORDS) {
-                    outRange.add(counter, num);
+                if (alertCounter < MAX_ALERT_RECORDS && ! outRange.contains(num)) {
+                    outRange.add(alertCounter ++, num);
                 }
-                counter++;
+                counter ++;
             }
 
             // 时常太短，看不出差别
             // 加入随机休眠
             try {
-                Thread.sleep(new Random().nextInt(3));
+                Thread.sleep(new Random().nextInt(MAX_SLEEP_MILLIS));
             } catch (InterruptedException e) {
             }
         }
@@ -93,7 +102,7 @@ public class Exercise01 {
         if (counter > 0) {
             result = outRange.toString();
             if (counter > MAX_ALERT_RECORDS) {
-                result += "等";
+                result += "等" + counter + "个";
             }
             result += "超出范围";
         }
