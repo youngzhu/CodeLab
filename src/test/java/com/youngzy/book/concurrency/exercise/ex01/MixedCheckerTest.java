@@ -19,12 +19,14 @@ public class MixedCheckerTest {
     SequentialChecker sequentialChecker;
     ConcurrentCheckerV0 concurrentCheckerV0;
     ConcurrentCheckerV1 concurrentCheckerV1;
+    ConcurrentCheckerV2 concurrentCheckerV2;
 
     @Before
     public void setUp() throws Exception {
         sequentialChecker = new SequentialChecker();
         concurrentCheckerV0 = new ConcurrentCheckerV0();
         concurrentCheckerV1 = new ConcurrentCheckerV1();
+        concurrentCheckerV2 = new ConcurrentCheckerV2();
 
         // 100 初始化
         for (int i = 0; i < 100; i ++) {
@@ -112,5 +114,43 @@ public class MixedCheckerTest {
         result2 = concurrentCheckerV1.check(DATA_10000, 0, 9999);
         assertEquals(result2.get(0), result1.get(0));
         assertEquals(result2.get(1).length(), result1.get(1).length());
+    }
+
+    /**
+     * 并行与串行的比较
+     */
+    @Test
+    public void check2() {
+        List<String> result1 = sequentialChecker.check(DATA_100, 0, 99);
+        List<String> result2 = concurrentCheckerV0.check(DATA_100, 0, 99);
+        List<String> result3 = concurrentCheckerV2.check(DATA_100, 0, 99);
+        assertEquals(result2.get(0), result1.get(0));
+        assertEquals(result2.get(1), result1.get(1));
+        assertEquals(result3.get(0), result1.get(0));
+        assertEquals(result3.get(1), result1.get(1));
+
+        result1 = sequentialChecker.check(DATA_1000, 0, 999);
+        result2 = concurrentCheckerV0.check(DATA_1000, 0, 999);
+        result3 = concurrentCheckerV2.check(DATA_1000, 0, 999);
+        assertEquals(result2.get(0), result1.get(0));
+        assertEquals(result2.get(1), result1.get(1));
+        assertEquals(result3.get(0), result1.get(0));
+        assertEquals(result3.get(1), result1.get(1));
+
+        result1 = sequentialChecker.check(DATA_10000, 0, 9999);
+        result2 = concurrentCheckerV0.check(DATA_10000, 0, 9999);
+        result3 = concurrentCheckerV2.check(DATA_10000, 0, 9999);
+        assertEquals(result2.get(0), result1.get(0));
+        assertEquals(result2.get(1), result1.get(1));
+        assertEquals(result3.get(0), result1.get(0));
+        assertEquals(result3.get(1), result1.get(1));
+
+        result1 = sequentialChecker.check(DATA_100000, 0, 99999);
+        result2 = concurrentCheckerV0.check(DATA_100000, 0, 99999);
+        result3 = concurrentCheckerV2.check(DATA_100000, 0, 99999);
+        assertEquals(result2.get(0), result1.get(0));
+        assertEquals(result2.get(1), result1.get(1));
+        assertEquals(result3.get(0), result1.get(0));
+        assertEquals(result3.get(1), result1.get(1));
     }
 }

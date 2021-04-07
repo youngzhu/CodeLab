@@ -119,6 +119,12 @@ public class ConcurrentCheckerV0 {
     }
 
     private boolean checkRange(int num, int low, int high) {
+        // 时常太短，看不出差别
+        // 加入随机休眠
+        try {
+            Thread.sleep(new Random().nextInt(MAX_SLEEP_MILLIS));
+        } catch (InterruptedException e) {
+        }
         if (num >= low && num <= high)
             return true;
         else
