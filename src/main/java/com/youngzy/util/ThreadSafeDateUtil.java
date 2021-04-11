@@ -115,6 +115,7 @@ public abstract class ThreadSafeDateUtil {
         if (gapDays < 0)
             gapMonths--;
 
+        // 注意，这里返回的n年m月，范围在 1-11
         return gapMonths % 12;
     }
 
