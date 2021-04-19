@@ -9,11 +9,12 @@ import static org.junit.Assert.*;
 
 public class ThreeSumTest {
 
-    ThreeSum ts = new ThreeSum();
+    IThreeSum ts = new ThreeSum4();
 
     @Test
     public void test() {
-        int[] input = {-1,0,1,2,-1,-4};
+//        int[] input = {-1,0,1,2,-1,-4};
+        int[] input = {0, 0, 0};
 
         List<List<Integer>> result = ts.threeSum(input);
 
