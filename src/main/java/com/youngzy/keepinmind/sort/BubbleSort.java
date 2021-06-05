@@ -4,10 +4,21 @@ package com.youngzy.keepinmind.sort;
  * 冒泡排序
  *
  * 时间复杂度：O(N^2)
- *
- * 冒泡：将数组顺时针旋转90度，想象成一个水桶，越小的气泡（数字）越快往上浮
  */
 public class BubbleSort implements ISort {
+    /*
+    冒泡：将数组顺时针旋转90度，想象成一个水桶，越小的气泡（数字）越快往上浮
+
+         ****   /\
+    a[0] *  *   ||
+         ****   ||
+         *  *   ||
+         ****   ||
+         *  *   ||
+         ****   ||
+    a[n] *  *   ||
+         ****
+     */
     @Override
     public void sort(int[] a) {
         for (int i = 0; i < a.length; i++) { // 为 a[i] 找到正确的元素
