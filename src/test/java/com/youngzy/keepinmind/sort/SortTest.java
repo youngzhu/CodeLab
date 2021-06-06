@@ -47,6 +47,12 @@ public class SortTest {
         test();
     }
 
+    @Test
+    public void compareCountSort() {
+        sorter = new CompareCountSort();
+        test();
+    }
+
     private void test() {
         long begin = System.currentTimeMillis();
         sorter.sort(before);
