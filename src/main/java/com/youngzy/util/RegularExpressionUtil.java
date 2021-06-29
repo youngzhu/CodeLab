@@ -19,7 +19,8 @@ public class RegularExpressionUtil {
         List<String> result = new ArrayList<>();
 
         // 包含[] : (\\[(.*?)])
-//        Pattern pattern = Pattern.compile("\\[(.*?)],*");
+//        Pattern pattern = Pattern.compile("\\[(.*?)],*"); // 原始的
+        // [] 中只有 [ 是特殊字符需要转义
         Pattern pattern = Pattern.compile("\\[([^]]+)]");
         Matcher matcher = pattern.matcher(exp);
 //        matcher.find(); // 我嘞个去，一定要find，不管是直接调，还是放在while里
