@@ -1,9 +1,11 @@
 package com.youngzy.leetcode.design;
 
-import javax.swing.tree.TreeNode;
-import java.util.HashMap;
-
-public class LRUCache1<K, V> {
+/*
+ * 本想着参考Map类，学习和模仿的心态完全地自己写一个类。
+ * 结果发现，Map类太复杂了，弃。。。
+ *
+ */
+public class LRUCache1<K, V> implements LRUCache<K, V> {
     public LRUCache1(int capacity) {
         this.loadFactor = DEFAULT_LOAD_FACTOR;
         this.threshold = tableSizeFor(capacity);
