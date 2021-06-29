@@ -3,30 +3,33 @@ package com.youngzy.leetcode.design;
 import com.youngzy.util.RegularExpressionUtil;
 import org.junit.Test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static org.junit.Assert.*;
 
 public class LRUCacheTest {
 
+    LRUCache3 cache;
+
+    private void createCache(int capacity) {
+        cache = new LRUCache3(capacity);
+    }
+
     @Test
     public void test() {
-        LRUCache2 lRUCache = new LRUCache2(2);
-        lRUCache.put(1, 1); // 缓存是 {1=1}
-        lRUCache.put(2, 2); // 缓存是 {1=1, 2=2}
-        assertEquals(1, lRUCache.get(1));    // 返回 1
-        lRUCache.put(3, 3); // 该操作会使得关键字 2 作废，缓存是 {1=1, 3=3}
-        assertEquals(-1, lRUCache.get(2));    // 返回 -1 (未找到)
-        lRUCache.put(4, 4); // 该操作会使得关键字 1 作废，缓存是 {4=4, 3=3}
-        assertEquals(-1, lRUCache.get(1));    // 返回 -1 (未找到)
-        assertEquals(3, lRUCache.get(3));    // 返回 3
-        assertEquals(4, lRUCache.get(4));    // 返回 4
+        createCache(2);
+        cache.put(1, 1); // 缓存是 {1=1}
+        cache.put(2, 2); // 缓存是 {1=1, 2=2}
+        assertEquals(1, cache.get(1));    // 返回 1
+        cache.put(3, 3); // 该操作会使得关键字 2 作废，缓存是 {1=1, 3=3}
+        assertEquals(-1, cache.get(2));    // 返回 -1 (未找到)
+        cache.put(4, 4); // 该操作会使得关键字 1 作废，缓存是 {4=4, 3=3}
+        assertEquals(-1, cache.get(1));    // 返回 -1 (未找到)
+        assertEquals(3, cache.get(3));    // 返回 3
+        assertEquals(4, cache.get(4));    // 返回 4
     }
 
     @Test
     public void test2() {
-        LRUCache2 cache = new LRUCache2(2);
+        createCache(2);
         assertEquals(-1, cache.get(2));
         cache.put(2, 6);
         assertEquals(-1, cache.get(1));
@@ -38,7 +41,7 @@ public class LRUCacheTest {
 
     @Test
     public void test3() {
-        LRUCache2 cache = new LRUCache2(2);
+        createCache(2);
         assertEquals(-1, cache.get(2));
         cache.put(2, 6);
         assertEquals(-1, cache.get(1));
@@ -61,11 +64,11 @@ public class LRUCacheTest {
         String[] expecteds = expected.split(",");
 
         int capacity = Integer.valueOf(values[0]);
-        LRUCache2 cache = new LRUCache2(capacity);
+        createCache(capacity);
 
         for (int i = 1; i < values.length; i++) {
-            System.out.println(i + ":" + cache.toString());
-            System.out.println(i + "-map:" + cache.map.keySet());
+//            System.out.println(i + ":" + cache.toString());
+//            System.out.println(i + "-map:" + cache.map.keySet());
 
             boolean isNum = true;
             Integer number = null;
@@ -75,14 +78,14 @@ public class LRUCacheTest {
                 isNum = false;
             }
             if (isNum) {
-                System.out.print("  get-");
+//                System.out.print("  get-");
                 assertEquals(Integer.valueOf(expecteds[i]).intValue(), cache.get(number));
             } else {
-                System.out.print("  put-");
+//                System.out.print("  put-");
                 String[] puts = values[i].split(",");
                 cache.put(Integer.valueOf(puts[0]), Integer.valueOf(puts[1]));
             }
-            System.out.println(values[i]);
+//            System.out.println(values[i]);
         }
     }
 
