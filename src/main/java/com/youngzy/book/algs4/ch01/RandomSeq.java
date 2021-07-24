@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 /**
+ * StdOut 示例
  * @author youngzy
  * @since 2021-07-11
  */
