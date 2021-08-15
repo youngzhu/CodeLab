@@ -1,7 +1,5 @@
 package com.youngzy.keepinmind.sort;
 
-import org.omg.PortableServer.LIFESPAN_POLICY_ID;
-
 /**
  * 冒泡视图化（桶）
  */

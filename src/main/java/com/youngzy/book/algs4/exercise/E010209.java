@@ -31,7 +31,7 @@ public class E010209 {
     }
 
     public static void main(String[] args) {
-        In in = new In("tinyAllowlist.txt");
+        In in = new In("algs4/tinyAllowlist.txt");
         int[] whiteList = in.readAllInts();
         Arrays.sort(whiteList);
         Counter counter = new Counter("key");
