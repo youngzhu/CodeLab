@@ -1,5 +1,9 @@
 package com.youngzy.java.defaultmethod;
 
+import com.youngzy.java.defaultmethod.plugin.Fish;
+import com.youngzy.java.defaultmethod.plugin.GillBreatheSupplier;
+import com.youngzy.java.defaultmethod.plugin.Human;
+import com.youngzy.java.defaultmethod.plugin.LungBreatheSupplier;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,5 +18,11 @@ public class DefaultMethodTest {
         assertEquals(Bird.BIRD_SAYING, new DaPengPlugin().fly());
 
         assertEquals(Flyable.FLYABLE_SAYING, new Airplane().fly());
+    }
+
+    @Test
+    public void testPlugin() {
+        assertEquals(LungBreatheSupplier.LUNG_BREATHE, new Human().breathe());
+        assertEquals(GillBreatheSupplier.GILL_BREATHE, new Fish().breathe());
     }
 }
