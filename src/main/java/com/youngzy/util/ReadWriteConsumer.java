@@ -7,6 +7,6 @@ import java.io.IOException;
  * @since 2024-02-22
  */
 @FunctionalInterface
-public interface ReadWriteBlock {
+public interface ReadWriteConsumer {
     void accept(ReadWriteEAM instance) throws IOException;
 }

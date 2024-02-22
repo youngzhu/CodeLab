@@ -49,11 +49,11 @@ public class ReadWriteEAM {
 
     public static void readProcessWrite(String inputFile,
                                         String outputFile,
-                                        ReadWriteBlock block)
+                                        ReadWriteConsumer consumer)
             throws IOException {
         ReadWriteEAM fileWriterEAM = new ReadWriteEAM(inputFile, outputFile);
         try {
-            block.accept(fileWriterEAM);
+            consumer.accept(fileWriterEAM);
         } finally {
             fileWriterEAM.close();
         }
