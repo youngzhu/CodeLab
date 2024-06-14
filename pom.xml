@@ -83,6 +83,12 @@
             <version>11</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.2.1-jre</version>
+        </dependency>
+
         <!-- 测试依赖的包 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
