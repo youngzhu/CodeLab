@@ -32,6 +32,8 @@ public class Maps {
 
         TreeMap sortedMap = new TreeMap();
         // 加上 comparator 会丢掉相同value的数据，Map中的数据都少了
+        // 最初是对这种带比较器的构造函数感兴趣
+        // 翻了API，原来从 1.2 版本就有了
 //        TreeMap sortedMap = new TreeMap(comparator);
         sortedMap.putAll(map);
         return sortedMap;
