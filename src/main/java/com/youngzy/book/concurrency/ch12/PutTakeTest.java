@@ -1,16 +1,15 @@
 package com.youngzy.book.concurrency.ch12;
 
-import junit.framework.TestCase;
-
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 12-5，6 测试BoundedBuffer的生产者-消费者程序
  */
-public class PutTakeTest extends TestCase {
+public class PutTakeTest {
     protected static final ExecutorService pool = Executors.newCachedThreadPool();
     protected CyclicBarrier barrier;
     protected final SemaphoreBoundedBuffer<Integer> sbb;

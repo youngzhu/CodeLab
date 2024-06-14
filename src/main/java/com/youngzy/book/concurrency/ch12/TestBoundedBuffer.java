@@ -1,11 +1,11 @@
 package com.youngzy.book.concurrency.ch12;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 12-2，3,7 BoundedBuffer 的单元测试类
  */
-public class TestBoundedBuffer extends TestCase {
+public class TestBoundedBuffer {
     private static final long LOCKUP_DETECT_TIMEOUT = 1000;
     private static final int CAPACITY = 10000;
     private static final int THRESHOLD = 10000;

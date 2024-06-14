@@ -1,6 +1,7 @@
 package com.youngzy.book.concurrency.ch12;
 
 import java.util.concurrent.CyclicBarrier;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 12-12 采用基于栅栏的定时器进行测试
