@@ -1,17 +1,17 @@
 package com.youngzy.leetcode.interview;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SmallestKTest {
 
     private SmallestK sk;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         sk = new SmallestK();
     }

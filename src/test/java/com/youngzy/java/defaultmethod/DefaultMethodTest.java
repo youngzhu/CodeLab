@@ -4,9 +4,9 @@ import com.youngzy.java.defaultmethod.plugin.Fish;
 import com.youngzy.java.defaultmethod.plugin.GillBreatheSupplier;
 import com.youngzy.java.defaultmethod.plugin.Human;
 import com.youngzy.java.defaultmethod.plugin.LungBreatheSupplier;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DefaultMethodTest {
 

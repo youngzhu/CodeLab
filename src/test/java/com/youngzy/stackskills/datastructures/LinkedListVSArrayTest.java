@@ -1,8 +1,8 @@
 package com.youngzy.stackskills.datastructures;
 
 import com.youngzy.stackskills.datastructures.list.LinkedListVSArray;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
@@ -13,7 +13,7 @@ public class LinkedListVSArrayTest {
 
     LinkedListVSArray la;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         la = new LinkedListVSArray();
     }

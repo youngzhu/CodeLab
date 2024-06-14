@@ -1,15 +1,15 @@
 package com.youngzy.leetcode.interview;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CircusTowerTest {
 
     CircusTower4 ct;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         ct = new CircusTower4();
     }

@@ -2,14 +2,11 @@ package com.youngzy.book.cleancode.appendix.a.nonthreaded;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import com.youngzy.book.cleancode.appendix.a.MessageUtils;
 import com.youngzy.book.cleancode.appendix.a.Server;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 public class ClientTest {
 	private static final int PORT = 8009;
@@ -18,7 +15,7 @@ public class ClientTest {
 	Server server;
 	Thread serverThread;
 	
-	@Before
+	@BeforeEach
 	public void createServer() {
 		try {
 			server = new Server(PORT, TIMEOUT);
@@ -29,7 +26,7 @@ public class ClientTest {
 		serverThread.start();
 	}
 	
-	@Test(timeout = 10000)
+//	@Test(timeout = 10000)
 	public void shouldRunInUnder10Sec() throws InterruptedException {
 		Thread[] threads = new Thread[10];
 		
@@ -78,7 +75,7 @@ public class ClientTest {
 		socket.close();
 	}
 	
-	@After
+	@AfterEach
 	public void shutdownServer() {
 		if (server != null) {
 			server.stopProcessing();

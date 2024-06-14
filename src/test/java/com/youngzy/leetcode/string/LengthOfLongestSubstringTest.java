@@ -1,7 +1,8 @@
 package com.youngzy.leetcode.string;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LengthOfLongestSubstringTest {
 
@@ -11,7 +12,7 @@ public class LengthOfLongestSubstringTest {
 
 //        Assert.assertEquals(3, lols.lengthOfLongestSubstring("abaca"));
 //        Assert.assertEquals(4, lols.lengthOfLongestSubstring("aabcad"));
-        Assert.assertEquals(3, lols.lengthOfLongestSubstring("pwwkew"));
+        assertEquals(3, lols.lengthOfLongestSubstring("pwwkew"));
     }
 
 }

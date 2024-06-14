@@ -1,6 +1,6 @@
 package com.youngzy.stackskills.designpattern.p21proxy;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import java.awt.*;

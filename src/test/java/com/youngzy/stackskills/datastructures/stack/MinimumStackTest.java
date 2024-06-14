@@ -1,14 +1,14 @@
 package com.youngzy.stackskills.datastructures.stack;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MinimumStackTest {
     MinimumStack minimumStack;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         minimumStack = new MinimumStack();
     }

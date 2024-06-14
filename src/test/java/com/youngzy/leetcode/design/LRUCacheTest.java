@@ -1,9 +1,9 @@
 package com.youngzy.leetcode.design;
 
 import com.youngzy.util.RegularExpressionUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LRUCacheTest {
 

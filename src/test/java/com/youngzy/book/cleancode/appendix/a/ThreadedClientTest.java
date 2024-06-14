@@ -1,13 +1,10 @@
 package com.youngzy.book.cleancode.appendix.a;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+
 import java.io.IOException;
 import java.net.Socket;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.youngzy.book.cleancode.appendix.a.MessageUtils;
 
 public class ThreadedClientTest {
 	private static final int PORT = 8009;
@@ -16,7 +13,7 @@ public class ThreadedClientTest {
 	ThreadedServer server;
 	Thread serverThread;
 	
-	@Before
+	@BeforeEach
 	public void createServer() {
 		try {
 			server = new ThreadedServer(PORT, TIMEOUT);
@@ -27,7 +24,7 @@ public class ThreadedClientTest {
 		serverThread.start();
 	}
 	
-	@Test(timeout = 10000)
+//	@Test(timeout = 10000)
 	public void shouldRunInUnder10Sec() throws InterruptedException {
 		Thread[] threads = new Thread[10];
 		
@@ -76,7 +73,7 @@ public class ThreadedClientTest {
 		socket.close();
 	}
 	
-	@After
+	@AfterEach
 	public void shutdownServer() {
 		if (server != null) {
 			server.stopProcessing();

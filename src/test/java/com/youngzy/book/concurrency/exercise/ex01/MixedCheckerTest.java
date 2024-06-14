@@ -1,13 +1,13 @@
 package com.youngzy.book.concurrency.exercise.ex01;
 
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MixedCheckerTest {
     static final int[] DATA_100 = new int[100];
@@ -21,7 +21,7 @@ public class MixedCheckerTest {
     ConcurrentCheckerV1 concurrentCheckerV1;
     ConcurrentCheckerV2 concurrentCheckerV2;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         sequentialChecker = new SequentialChecker();
         concurrentCheckerV0 = new ConcurrentCheckerV0();

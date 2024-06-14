@@ -1,9 +1,9 @@
 package com.youngzy.leetcode.string;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PermutationTest {
 
@@ -16,7 +16,7 @@ public class PermutationTest {
         assertArrayEquals(expected, foo.permutation("qwe"));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         foo = new Permutation();
     }

@@ -1,10 +1,10 @@
 package com.youngzy.keepinmind.roman;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static com.youngzy.keepinmind.roman.RomanNumeralParser.*;
 import static com.youngzy.keepinmind.roman.RomanNumeral.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author youngzy

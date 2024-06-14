@@ -1,10 +1,11 @@
 package com.youngzy.stackskills.designpattern.p02decorator;
 
 import com.youngzy.util.ResourceFileUtil;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LowerCaseInputStreamTest {
 
@@ -28,7 +29,7 @@ public class LowerCaseInputStreamTest {
         in.read(read);
         String result = new String(read);
 
-        Assert.assertEquals("i know the decorator pattern therefore i rule",
+        assertEquals("i know the decorator pattern therefore i rule",
                 result);
 
 

@@ -1,16 +1,16 @@
 package com.youngzy.stackskills.algorithms.sort;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SortTest {
     Sort sort;
     int[] before;
     int[] after = {-1, 0, 1, 3, 3, 8, 9};
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         // 保证每次test前都是无序的
         before = new int[]{9, 0, -1, 8, 3, 3, 1};

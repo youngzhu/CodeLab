@@ -1,9 +1,9 @@
 package com.youngzy.stackskills.designpattern.p16state.gumball;
 
 import com.youngzy.stackskills.designpattern.p16state.gumball.v1.GumballMachine;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 升级的宗旨：不改变原有功能，又能适应新的需求

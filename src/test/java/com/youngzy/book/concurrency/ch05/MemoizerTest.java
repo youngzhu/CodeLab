@@ -1,12 +1,12 @@
 package com.youngzy.book.concurrency.ch05;
 
-import org.apache.commons.math3.random.RandomData;
 import org.apache.commons.math3.random.RandomDataGenerator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class MemoizerTest {
 

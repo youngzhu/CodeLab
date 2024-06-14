@@ -1,20 +1,20 @@
 package com.youngzy.leetcode.unionfind;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountsMergeTest {
 
     AccountsMerge am;
     List<List<String>> input;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         am = new AccountsMerge();
 

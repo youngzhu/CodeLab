@@ -1,11 +1,11 @@
 package com.youngzy.lpr;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LPRTest {
 
@@ -17,7 +17,7 @@ public class LPRTest {
 
     private LPR lpr;
 
-    @Before
+    @BeforeEach
     public void init() {
         lpr = new LPR(LOAN_AMOUNT, LOAN_TERM, PAID_TERM, EXERCISE_RATE, BASE_RATE);
     }
@@ -46,7 +46,7 @@ public class LPRTest {
     @Test
     public void payPerMonth() {
         BigDecimal expected = new BigDecimal("4139.87");
-        Assert.assertEquals(expected, lpr.payPerMonth());
+        assertEquals(expected, lpr.payPerMonth());
     }
 
     @Test

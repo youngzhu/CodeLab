@@ -1,13 +1,13 @@
 package com.youngzy.keepinmind.sort;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SortTest {
     final static int n = 1000;// 数据量
@@ -18,7 +18,7 @@ public class SortTest {
 
     int[] before, after;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() throws Exception {
         Random rdm = new Random();
         for (int i = 0; i < n; i++) {
@@ -28,7 +28,7 @@ public class SortTest {
         Arrays.sort(EXPECTED);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         before = Arrays.copyOf(SEED, n);
         System.out.println(Arrays.toString(before));

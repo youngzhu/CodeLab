@@ -1,12 +1,12 @@
 package com.youngzy.book.concurrency.exercise.ex01;
 
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
 
 public class ConcurrentCheckerV2Test {
     static final int[] DATA_100 = new int[100];
@@ -17,7 +17,7 @@ public class ConcurrentCheckerV2Test {
 
     ConcurrentCheckerV2 checker;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         checker = new ConcurrentCheckerV2();
 
