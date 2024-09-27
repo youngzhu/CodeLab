@@ -89,6 +89,12 @@
             <version>33.2.1-jre</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>3.0.22</version>
+        </dependency>
+
         <!-- 测试依赖的包 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
