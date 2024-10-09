@@ -452,3 +452,101 @@ switch (years) {
     case 11..25: interestRate = 0.052; break;
     default: interestRate = 0.037;
 }
+
+//  GPath 支持
+def listOfMaps = [['a': 11, 'b': 12], ['a': 21, 'b': 22]]
+assert listOfMaps.a == [11, 21] //GPath 标记
+assert listOfMaps*.a == [11, 21] //散布点标记
+
+listOfMaps = [['a': 11, 'b': 12], ['a': 21, 'b': 22], null]
+assert listOfMaps*.a == [11, 21, null] // 也适合 null 值
+assert listOfMaps*.a == listOfMaps.collect { it?.a } // 等价标记
+// 但只收集 非 null 值
+assert listOfMaps.a == [11,21]
+
+// 散布操作符
+//散布操作符还可用于将一个集合内联到另一个中。它是一个语法糖，因为通过它能够避免调用 putAll，有利于实现单行方式。
+assert [ 'z': 900,
+         *: ['a': 100, 'b': 200], 'a': 300] == ['a': 300, 'b': 200, 'z': 900]
+// 在 map 定义中 散布 map 标记法
+assert [*: [3: 3, *: [5: 5]], 7: 7] == [3: 3, 5: 5, 7: 7]
+
+def f = { [1: 'u', 2: 'v', 3: 'w'] }
+assert [*: f(), 10: 'zz'] == [1: 'u', 10: 'zz', 2: 'v', 3: 'w']
+//在函数参数中的散布 map 标记法
+f = { map1 -> map1.c }
+assert f(*: ['a': 10, 'b': 20, 'c': 30], 'e': 50) == 30
+
+f = { m, i, j, k -> [m, i, j, k] }
+//使用散布 map 标记法来处理未命名与已命名参数
+assert f('e': 100, *[4, 5], *: ['a': 10, 'b': 20, 'c': 30], 6) ==
+        [["e": 100, "b": 20, "c": 30, "a": 10], 4, 5, 6]
+
+//星号（*）操作符
+//通过星号操作符这个快捷操作符，你可以对集合中所有的元素调用方法或属性：
+assert [1, 3, 5] == ['a', 'few', 'words']*.size()
+
+class Person {
+    String name
+    int age
+}
+def persons = [new Person(name:'Hugo', age:17), new Person(name:'Sandra',age:19)]
+assert [17, 19] == persons*.age
+
+//利用下标操作符进行截取操作
+//对列表、数组及 map，使用下标表达式，可以按索引访问。有趣的是，在这种情况下，字符串也可以被看成一种特殊的集合：
+def text = 'nice cheese gromit!'
+def x = text[2]
+
+assert x == 'c'
+assert x.class == String
+
+def sub = text[5..10]
+assert sub == 'cheese'
+
+def list4 = [10, 11, 12, 13]
+def answer = list4[2,3]
+assert answer == [12,13]
+
+//也可以使用范围来抽取部分集合：
+list = 100..200
+sub = list[1, 3, 20..25, 33]
+assert sub == [101, 103, 120, 121, 122, 123, 124, 125, 133]
+
+//下标操作符还可以用来更新一个已存在的（可改变）集合：
+// .. 表示范围
+// , 表示列表
+list = ['a','x','x','d']
+list[1..2] = ['b','c']
+assert list == ['a','b','c','d']
+list[1,3] = ['B','C']
+assert list == ['a','B','c','C']
+
+//值得一提的是，允许出现负数，从而方便了从集合末尾起提取元素。
+//
+//可以利用负数从列表、数组及字符串等结构的末尾起开始计数：
+text = "nice cheese gromit!"
+x = text[-1]
+assert x == "!"
+
+def name = text[-7..-2]
+assert name == "gromit"
+
+//最后，如果你使用了反向的范围（起始索引大于末尾索引），所得结果也是反的。
+text = "nice cheese gromit!"
+name = text[3..1]
+assert name == "eci"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
