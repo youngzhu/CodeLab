@@ -1,3 +1,5 @@
+package com.youngzy.groovy.hello
+
 import groovy.io.FileType
 
 import java.nio.file.Path

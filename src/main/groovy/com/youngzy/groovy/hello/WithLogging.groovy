@@ -1,4 +1,4 @@
-package com.youngzy.groovy
+package com.youngzy.groovy.hello
 
 import org.codehaus.groovy.transform.GroovyASTTransformationClass
 
@@ -9,6 +9,6 @@ import java.lang.annotation.Target
 
 @Retention(RetentionPolicy.SOURCE)
 @Target([ElementType.METHOD])
-@GroovyASTTransformationClass(["com.youngzy.groovy.WithLoggingASTTransformation"])
+@GroovyASTTransformationClass(["com.youngzy.groovy.hello.WithLoggingASTTransformation"])
 public @interface WithLogging {
 }

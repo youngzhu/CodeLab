@@ -1,4 +1,5 @@
-package com.youngzy.groovy
+package com.youngzy.groovy.hello
+
 
 import groovy.transform.Memoized
 import groovy.transform.ToString
@@ -33,7 +34,7 @@ class Person2 {
 
 def p = new Person2(firstName: 'Jack', lastName: 'Nicholson', age: 30)
 // 默认有包名
-//assert p.toString() == 'com.youngzy.groovy.Person2(Jack, Nicholson, 30)'
+//assert p.toString() == 'com.youngzy.groovy.hello.Person2(Jack, Nicholson, 30)'
 assert p.toString() == 'Person2(Jack, Nicholson, 30)'
 
 

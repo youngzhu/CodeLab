@@ -1,4 +1,4 @@
-package com.youngzy.groovy
+package com.youngzy.groovy.hello
 
 def list = [5, 6, 7, 8]
 assert list.get(2) == 7

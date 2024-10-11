@@ -1,4 +1,4 @@
-package com.youngzy.groovy
+package com.youngzy.groovy.hello
 
 import groovy.transform.CompileStatic
 import org.codehaus.groovy.ast.ASTNode

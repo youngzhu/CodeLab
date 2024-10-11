@@ -1,4 +1,4 @@
 moduleName=Test module for specifications
 moduleVersion=1.0-test
-extensionClasses=com.youngzy.groovy.MaxRetriesExtension
-staticExtensionClasses=com.youngzy.groovy.StaticStringExtension
+extensionClasses=com.youngzy.groovy.hello.MaxRetriesExtension
+staticExtensionClasses=com.youngzy.groovy.hello.StaticStringExtension

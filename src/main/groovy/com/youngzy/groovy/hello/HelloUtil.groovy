@@ -1,4 +1,4 @@
-package com.youngzy.groovy
+package com.youngzy.groovy.hello
 
 import java.beans.PropertyChangeListener
 

@@ -1,5 +1,6 @@
-package com.youngzy.groovy
+package com.youngzy.groovy.hello
 
+import com.youngzy.groovy.hello.Person
 import groovy.time.TimeCategory
 
 //// 运行时元编程
