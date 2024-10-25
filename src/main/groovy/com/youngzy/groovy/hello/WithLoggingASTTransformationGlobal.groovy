@@ -15,8 +15,8 @@ import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.transform.ASTTransformation
 import org.codehaus.groovy.transform.GroovyASTTransformation
 
-@CompileStatic
 //在 Groovy 中编写 AST 转换时，即使并不强制，也强烈建议使用 CompileStatic，因为这能提高编译器的性能。
+@CompileStatic
 //利用 org.codehaus.groovy.transform.GroovyASTTransformation 来注释，从而得知转换运行的具体编译阶段。这里正处于语义解析阶段。
 @GroovyASTTransformation(phase = CompilePhase.SEMANTIC_ANALYSIS)
 class WithLoggingASTTransformationGlobal implements ASTTransformation { // 实现 ASTTransformation 接口。
