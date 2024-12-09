@@ -1,2 +1,3 @@
-com.youngzy.groovy.hello.WithLoggingASTTransformationGlobal
-com.youngzy.groovy.book.gina2.ch09.CompiledAtASTTransformation
+#可注释
+#com.youngzy.groovy.hello.WithLoggingASTTransformationGlobal
+#com.youngzy.groovy.book.gina2.ch09.CompiledAtASTTransformation
