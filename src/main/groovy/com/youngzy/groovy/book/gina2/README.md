@@ -14,8 +14,8 @@
 ### CH10: Groovy as a static language
 ### CH11: Working with builders
 ### CH12: Working with the GDK
-### 
-### 
+### CH13: Database programming with Groovy
+### CH14: Working with XML and JSON
 ### 
 ### 
 ### 
