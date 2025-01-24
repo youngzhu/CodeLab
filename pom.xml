@@ -94,7 +94,7 @@
             <!-- 没有mock -->
             <!--<artifactId>groovy</artifactId>-->
             <artifactId>groovy-all</artifactId>
-            <version>3.0.22</version>
+            <version>3.0.23</version>
         </dependency>
         <dependency>
             <groupId>org.spockframework</groupId>
@@ -111,13 +111,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
+            <version>5.10.0</version>
             <!--<scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
+            <version>5.10.0</version>
             <!--<scope>test</scope>-->
         </dependency>
 
