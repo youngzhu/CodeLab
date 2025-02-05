@@ -19,7 +19,7 @@
 ### CH15: Interacting with Web Services
 ### CH16: Integrating Groovy
 ### CH17: Unit testing with Groovy
-### 
+### CH18: Concurrent Groovy with GPars
 ### 
 
 [1]: https://github.com/Dierk/GroovyInAction
